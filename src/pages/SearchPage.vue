@@ -27,6 +27,7 @@
         class="mx-auto w-100"
       >Search</b-button>
     </b-form>
+    <Re>
   </div>
 </template>
 
@@ -48,7 +49,8 @@ export default {
       diets: [{ value: null, text: "diet", disabled: true }],
       cuisines: [{ value: null, text: "cuisine", disabled: true }],
       intolerences: [{ value: null, text: "intolerance", disabled: true }],
-      resultNum: [5, 10, 15]
+      resultNum: [5, 10, 15],
+      
     };
   },
   mounted() {
@@ -71,13 +73,13 @@ export default {
         if (this.form.Intolerence != null) {
           search_params.intolerance = this.form.Intolerence;
         }
-        console.log(this.form.Cuisine);
+   
         const res = await this.axios.get(
           `https://recipestest1.herokuapp.com/recipes/search/query/${this.form.searchQ}/amount/${this.form.number}`,
           { params: search_params }
         );
 
-        console.log(res);
+ 
       } catch (err) {
         console.log(err.res);
         this.form.submitError = err.res.data.message;

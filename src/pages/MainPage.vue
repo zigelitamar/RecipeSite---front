@@ -1,11 +1,25 @@
 <template>
   <div class="container">
-    <h1 class="title">Main Page</h1>
-    <RecipePreviewList rType="rand" title="Randome Recipes" class="RandomRecipes center" />
-    <router-link v-if="!$root.store.username" to="/login" tag="button">You need to Login to vue this</router-link>
-    {{ !$root.store.username }}
-    <RecipePreviewList title="Last Viewed Recipes" rType="lastSeen" class="RandomRecipes center"></RecipePreviewList>
-
+    <b-container>
+      <b-row>
+        <b-col>
+          <RecipePreviewList rType="rand" title="Randome Recipes" class="RandomRecipes center" />
+        </b-col>
+        <b-col>
+          <router-link
+            v-if="!$root.store.username"
+            to="/login"
+            tag="button"
+          >You need to Login to vue this</router-link>
+          <RecipePreviewList
+            v-if="$root.store.username"
+            title="Last Viewed Recipes"
+            rType="lastSeen"
+            class="RandomRecipes center"
+          ></RecipePreviewList>
+        </b-col>
+      </b-row>
+    </b-container>
     <!-- <div
       style="position: absolute;top: 70%;left: 50%;transform: translate(-50%, -50%);"
     >

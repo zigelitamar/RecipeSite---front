@@ -4,11 +4,11 @@
       {{ title }}:
       <slot></slot>
     </h3>
-    <b-row>
-      <b-col v-for="r in recipes" :key="r.id">
+    <b-col>
+      <b-row v-for="r in recipes" :key="r.id">
         <RecipePreview class="recipePreview" :recipe="r" :rType="rType" />
-      </b-col>
-    </b-row>
+      </b-row>
+    </b-col>
   </b-container>
 </template>
 
@@ -36,7 +36,6 @@ export default {
     };
   },
   mounted() {
-    console.log(this.$cookies.get("session"));
     this.updateRecipes();
   },
   methods: {
@@ -48,18 +47,34 @@ export default {
           endpoint = "https://recipestest1.herokuapp.com/recipes/randomrecipe";
         } else if (type == "lastSeen" && this.$root.store.username) {
           endpoint = "https://recipestest1.herokuapp.com/user/lastseen";
-        } else {
-          endpoint = "https://recipestest1.herokuapp.com/recipes/randomrecipe";
         }
-        console.log(type);
-        console.log(endpoint);
         const response = await this.axios.get(endpoint, {
           withCredentials: true
         });
-
-        console.log(response);
-
         const recipes = response.data;
+        if (this.$root.store.username) {
+          let ids = [];
+          recipes.forEach(element => {
+            ids.push(element.id);
+          });
+
+          const res = await this.axios.get(
+            "https://recipestest1.herokuapp.com/user/recipeInfo/" +
+              JSON.stringify(ids),
+            {
+              withCredentials: true
+            }
+          );
+
+          for (let key in res.data) {
+            recipes.forEach(recipe => {
+              if (recipe.id == key) {
+                recipe.watched = res.data[key].watched;
+                recipe.favorite = res.data[key].favorite;
+              }
+            });
+          }
+        }
         this.recipes = [];
         this.recipes.push(...recipes);
         // console.log(this.recipes);

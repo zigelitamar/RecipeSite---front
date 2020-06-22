@@ -6,6 +6,7 @@ import routes from "./routes";
 import VueRouter from "vue-router";
 import VueCookies from "vue-cookies";
 Vue.use(VueCookies);
+axios.defaults.withCredentials = true;
 Vue.use(VueRouter);
 const router = new VueRouter({
   routes,
