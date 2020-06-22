@@ -14,11 +14,11 @@
         <b-form-select id="resultnum" v-model="form.number" :options="resultNum"></b-form-select>
       </b-form-group>
       <b-form-group label="Choose your filters:">
-        <b-form-select id="diet" v-model="form.Diet" :options="diets"></b-form-select>
+        <b-form-select id="Diet" v-model="form.Diet" :options="diets"></b-form-select>
 
-        <b-form-select id="cuisine" v-model="form.Cuisine" :options="cuisines"></b-form-select>
+        <b-form-select id="Cuisine" v-model="form.Cuisine" :options="cuisines"></b-form-select>
 
-        <b-form-select id="diet" v-model="form.Intolerence" :options="intolerences"></b-form-select>
+        <b-form-select id="Intolerence" v-model="form.Intolerence" :options="intolerences"></b-form-select>
       </b-form-group>
       <b-button
         type="submit"
@@ -29,7 +29,6 @@
     </b-form>
   </div>
 </template>
-
 
 <script>
 import cuisines from "../assets/cuisine";
@@ -62,8 +61,20 @@ export default {
   methods: {
     async Search() {
       try {
+        let search_params = {};
+        if (this.form.Diet != null) {
+          search_params.diet = this.form.Diet;
+        }
+        if (this.form.Cuisine != null) {
+          search_params.cuisine = this.form.Cuisine;
+        }
+        if (this.form.Intolerence != null) {
+          search_params.intolerance = this.form.Intolerence;
+        }
+        console.log(this.form.Cuisine);
         const res = await this.axios.get(
-          "https://recipestest1.herokuapp.com/recipes/search/query/${this.form.searchQ}/amount/${this.form.number}"
+          `https://recipestest1.herokuapp.com/recipes/search/query/${this.form.searchQ}/amount/${this.form.number}`,
+          { params: search_params }
         );
 
         console.log(res);
@@ -78,7 +89,6 @@ export default {
   }
 };
 </script>
-
 
 <style lang="scss" scoped>
 .container {

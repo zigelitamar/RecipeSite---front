@@ -6,7 +6,7 @@
     </h3>
     <b-row>
       <b-col v-for="r in recipes" :key="r.id">
-        <RecipePreview class="recipePreview" :recipe="r" />
+        <RecipePreview class="recipePreview" :recipe="r" :rType="rType" />
       </b-col>
     </b-row>
   </b-container>
@@ -23,6 +23,11 @@ export default {
     title: {
       type: String,
       required: true
+    },
+    rType: {
+      type: String,
+      required: false,
+      default: "MyRecipe"
     }
   },
   data() {
@@ -31,17 +36,30 @@ export default {
     };
   },
   mounted() {
+    console.log(this.$cookies.get("session"));
     this.updateRecipes();
   },
   methods: {
     async updateRecipes() {
       try {
-        const response = await this.axios.get(
-          "https://test-for-3-2.herokuapp.com/recipes/random"
-        );
+        const type = this.rType;
+        let endpoint = "";
+        if (type == "rand") {
+          endpoint = "https://recipestest1.herokuapp.com/recipes/randomrecipe";
+        } else if (type == "lastSeen" && this.$root.store.username) {
+          endpoint = "https://recipestest1.herokuapp.com/user/lastseen";
+        } else {
+          endpoint = "https://recipestest1.herokuapp.com/recipes/randomrecipe";
+        }
+        console.log(type);
+        console.log(endpoint);
+        const response = await this.axios.get(endpoint, {
+          withCredentials: true
+        });
 
-        // console.log(response);
-        const recipes = response.data.recipes;
+        console.log(response);
+
+        const recipes = response.data;
         this.recipes = [];
         this.recipes.push(...recipes);
         // console.log(this.recipes);
