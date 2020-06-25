@@ -27,7 +27,13 @@
         class="mx-auto w-100"
       >Search</b-button>
     </b-form>
-    <Re>
+    <b-container>
+      <b-col v-if="flag">
+        <b-row v-for="r in recipes" :key="r.id">
+          <RecipePreview class="recipePreview" :recipe="r" />
+        </b-row>
+      </b-col>
+    </b-container>
   </div>
 </template>
 
@@ -35,8 +41,11 @@
 import cuisines from "../assets/cuisine";
 import diets from "../assets/diets";
 import intolerences from "../assets/intolrence";
+import RecipePreview from "../components/RecipePreview";
 export default {
-  name: "Search",
+  components: {
+    RecipePreview
+  },
   data() {
     return {
       form: {
@@ -50,7 +59,9 @@ export default {
       cuisines: [{ value: null, text: "cuisine", disabled: true }],
       intolerences: [{ value: null, text: "intolerance", disabled: true }],
       resultNum: [5, 10, 15],
-      
+      flag: false,
+      noresults: false,
+      recipes: []
     };
   },
   mounted() {
@@ -73,13 +84,20 @@ export default {
         if (this.form.Intolerence != null) {
           search_params.intolerance = this.form.Intolerence;
         }
-   
+
         const res = await this.axios.get(
           `https://recipestest1.herokuapp.com/recipes/search/query/${this.form.searchQ}/amount/${this.form.number}`,
           { params: search_params }
         );
-
- 
+        let all = res.data;
+        console.log(all);
+        this.recipes = [];
+        this.recipes.push(...all);
+        if (this.recipes.length > 0) {
+          this.flag = true;
+        } else {
+          this.noresults = true;
+        }
       } catch (err) {
         console.log(err.res);
         this.form.submitError = err.res.data.message;

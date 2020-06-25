@@ -1,15 +1,23 @@
 <template>
   <router-link :to="{ name: 'recipe', params: { recipeId: recipe.id } }" class="recipe-preview">
-    <div class="recipe-body">
-      <img :src="recipe.image" class="recipe-image" />
-    </div>
-    <div class="recipe-footer">
-      <div :title="recipe.title" class="recipe-title">{{ recipe.title }}</div>
-      <ul class="recipe-overview">
-        <li>{{ recipe.readyInMinutes }} minutes</li>
-        <li>{{ recipe.aggregateLikes }} likes</li>
-      </ul>
-    </div>
+    <b-card
+      :title="recipe.title"
+      :img-src="recipe.image"
+      img-alt="Image"
+      img-top
+      tag="article"
+      style="max-width: 20rem;"
+      class="mb-2"
+    >
+      <b-card-text>
+        <ul class="recipe-overview">
+          <li>{{ recipe.readyInMinutes }} minutes</li>
+          <li>{{ recipe.aggregateLikes }} likes</li>
+        </ul>
+      </b-card-text>
+
+      <b-button>Go to full recipe</b-button>
+    </b-card>
   </router-link>
 </template>
 
@@ -22,10 +30,6 @@ export default {
     recipe: {
       type: Object,
       required: true
-    },
-    rType: {
-      type: String,
-      required: false
     }
 
     // id: {
