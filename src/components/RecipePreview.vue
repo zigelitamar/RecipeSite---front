@@ -5,7 +5,7 @@
         <b-card-img :src="recipe.image" alt="Image" top />
       </router-link>
       <div>
-        <b-button @click="addfave">
+        <b-button v-if="recipe.favorite==false" variant="light" @click="addfave">
           <b-icon-heart v-if="recipe.favorite==false " font-scale="2" />
         </b-button>
         <b-icon-heart-fill v-if="recipe.favorite==true " font-scale="2" animation="throb" />
@@ -49,12 +49,14 @@ export default {
 
   methods: {
     async addfave() {
+    let test= this.$props.recipe.id
+     console.log(test);
       try {
         if (this.$root.store.username) {
           const res1 = await this.axios.post(
             "https://recipestest1.herokuapp.com/user/addFavoriteRecipe",
             {
-              id: this.recipe.id
+              id: this.$props.recipe.id
             }
           );
           alert("added");

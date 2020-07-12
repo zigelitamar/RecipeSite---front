@@ -1,26 +1,21 @@
 <template>
-  <router-link :to="{ name: 'recipe', params: { recipeId: recipe.id } }" class="recipe-preview">
-    <b-card
-      :title="recipe.recipe_name"
-      :img-src="recipe.image"
-      img-alt="Image"
-      img-top
-      tag="article"
-      style="max-width: 20rem;"
-      class="mb-2"
-    >
+  <div>
+    <b-card :title="recipe.recipe_name" tag="article" style="max-width: 20rem;" class="mb-2">
+      <router-link
+        :to="{ name: 'familyrecipe', params: { recipeId: recipe.recipe_id } }"
+        class="recipe-preview"
+      >
+        <b-card-img :src="recipe.image" img-alt="Image" img-top />
+      </router-link>
       <b-card-text>
         <ul class="recipe-overview">
-          <h1>noa</h1>
           <li>{{ recipe.duration }}</li>
           <li>By: {{ recipe.author }}</li>
           <li>Occasions: {{ recipe.occasions }}</li>
         </ul>
       </b-card-text>
-
-      <b-button>Go to full recipe</b-button>
     </b-card>
-  </router-link>
+  </div>
 </template>
 
 <script>

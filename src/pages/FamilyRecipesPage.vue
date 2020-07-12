@@ -1,7 +1,7 @@
 <template>
   <b-container>
     <h3>
-      Hi
+      My family recipes
       <slot></slot>
     </h3>
     <b-col>

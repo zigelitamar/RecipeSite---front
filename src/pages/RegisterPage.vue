@@ -102,6 +102,9 @@
         <b-form-invalid-feedback
           v-if="$v.form.password.required && !$v.form.password.length"
         >Have length between 5-10 characters long</b-form-invalid-feedback>
+            <b-form-invalid-feedback
+          v-if="!$v.form.password.withNumber || !$v.form.password.withSpecial"
+        >Have at least 1 special Letter and at least one number!</b-form-invalid-feedback>
       </b-form-group>
 
       <b-form-group
@@ -201,7 +204,14 @@ export default {
       },
       password: {
         required,
-        length: p => minLength(5)(p) && maxLength(10)(p)
+        length: p => minLength(5)(p) && maxLength(10)(p),
+        withNumber: function(value) {	
+       return /[0-9]/.test(value);	
+        },	
+        withSpecial: function(value) {	
+          return /[#?!@$%^&*-]/.test(value);	
+        },
+        
       },
       passwordconfirm: {
         required,

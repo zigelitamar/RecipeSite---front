@@ -1,16 +1,29 @@
 <template>
   <div class="container">
+       <b-alert
+      class="mt-2"
+      v-if="!$root.store.username"
+      variant=success
+      dismissible
+      show
+    >hello guest</b-alert>
+
     <b-container>
       <b-row>
         <b-col>
           <RecipePreviewList rType="rand" title="Randome Recipes" class="RandomRecipes center" />
+                  <button  @click="getRandom">Get Random Recipes</button>
+
         </b-col>
         <b-col>
-          <router-link
+            <div class="notConnected" v-if="!$root.store.username">
+            <LoginPage/>
+          </div>
+          <!-- <router-link
             v-if="!$root.store.username"
             to="/login"
             tag="button"
-          >You need to Login to vue this</router-link>
+          >You need to Login to vue this</router-link> -->
           <RecipePreviewList
             v-if="$root.store.username"
             title="Last Viewed Recipes"
@@ -29,10 +42,17 @@
 </template>
 
 <script>
+import LoginPage from "../pages/LoginPage"
 import RecipePreviewList from "../components/RecipePreviewList";
 export default {
   components: {
-    RecipePreviewList
+    RecipePreviewList,
+    LoginPage
+  },
+  methods:{
+   async getRandom(){
+      
+  }
   }
 };
 </script>
