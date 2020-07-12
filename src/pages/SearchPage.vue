@@ -1,7 +1,7 @@
 <template>
-  <div class="container">
+  <div>
     <h1 class="title">Search Page</h1>
-    <b-form @submit.prevent="onSearch">
+    <b-form class="container" @submit.prevent="onSearch">
       <b-form-group>
         <b-form-input id="searchQ" v-model="form.searchQ" type="text" placeholder="search..."></b-form-input>
       </b-form-group>
@@ -27,13 +27,15 @@
         class="mx-auto w-100"
       >Search</b-button>
     </b-form>
-    <b-container>
-      <b-col v-if="flag">
-        <b-row v-for="r in recipes" :key="r.id">
-          <RecipePreview class="recipePreview" :recipe="r" />
-        </b-row>
-      </b-col>
-    </b-container>
+    <div class="grid">
+      <div v-if="flag">
+        <div v-for="r in recipes" :key="r.id">
+          <div>
+            <RecipePreview :recipe="r" />
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -111,7 +113,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.container {
-  max-width: 400px;
+.grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  grid-auto-rows: minmax(80px, auto);
 }
 </style>
