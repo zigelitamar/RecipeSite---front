@@ -1,24 +1,38 @@
 <template>
-  <router-link :to="{ name: 'recipe', params: { recipeId: recipe.id } }" class="recipe-preview">
-    <b-card
-      :title="recipe.title"
-      :img-src="recipe.image"
-      img-alt="Image"
-      img-top
-      tag="article"
-      style="max-width: 20rem;"
-      class="mb-2"
-    >
+  <div>
+    <b-card :title="recipe.title" tag="article" style="max-width: 20rem;" class="mb-2">
+      <router-link :to="{ name: 'recipe', params: { recipeId: recipe.id } }" class="recipe-preview">
+        <b-card-img :src="recipe.image" alt="Image" top />
+      </router-link>
+      <div>
+        <b-button @click="addfave">
+          <b-icon-heart v-if="recipe.favorite==false " font-scale="2" />
+        </b-button>
+        <b-icon-heart-fill v-if="recipe.favorite==true " font-scale="2" animation="throb" />
+
+        <b-icon-eye-fill v-if="recipe.watched==true " font-scale="2" />
+      </div>
       <b-card-text>
         <ul class="recipe-overview">
           <li>{{ recipe.readyInMinutes }} minutes</li>
           <li>{{ recipe.aggregateLikes }} likes</li>
+          <li v-if="recipe.vegan==true">
+            <img src="../images/pngguru.com.png" height="50" width="50" />
+          </li>
+          <li v-if="recipe.vegetarian==true">
+            <img src="../images/hiclipart.com.png" height="50" width="50" />
+          </li>
+          <li v-if="recipe.glutenFree==true">
+            <img
+              src="../images/marshmallow-on-stick-free-png-8-original.png"
+              height="50"
+              width="50"
+            />
+          </li>
         </ul>
       </b-card-text>
-
-      <b-button>Go to full recipe</b-button>
     </b-card>
-  </router-link>
+  </div>
 </template>
 
 <script>
@@ -31,30 +45,26 @@ export default {
       type: Object,
       required: true
     }
+  },
 
-    // id: {
-    //   type: Number,
-    //   required: true
-    // },
-    // title: {
-    //   type: String,
-    //   required: true
-    // },
-    // readyInMinutes: {
-    //   type: Number,
-    //   required: true
-    // },
-    // image: {
-    //   type: String,
-    //   required: true
-    // },
-    // aggregateLikes: {
-    //   type: Number,
-    //   required: false,
-    //   default() {
-    //     return undefined;
-    //   }
-    // }
+  methods: {
+    async addfave() {
+      try {
+        if (this.$root.store.username) {
+          const res1 = await this.axios.post(
+            "https://recipestest1.herokuapp.com/user/addFavoriteRecipe",
+            {
+              id: this.recipe.id
+            }
+          );
+          alert("added");
+        } else {
+          alert("cant add");
+        }
+      } catch (err) {
+        console.log(err);
+      }
+    }
   }
 };
 </script>

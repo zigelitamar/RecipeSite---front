@@ -125,7 +125,29 @@ export default {
           { params: search_params }
         );
         let all = res.data;
-        console.log(all);
+        if (this.$root.store.username) {
+          let ids = [];
+          all.forEach(element => {
+            ids.push(element.id);
+          });
+
+          const res = await this.axios.get(
+            "https://recipestest1.herokuapp.com/user/recipeInfo/" +
+              JSON.stringify(ids),
+            {
+              withCredentials: true
+            }
+          );
+
+          for (let key in res.data) {
+            all.forEach(recipe => {
+              if (recipe.id == key) {
+                recipe.watched = res.data[key].watched;
+                recipe.favorite = res.data[key].favorite;
+              }
+            });
+          }
+        }
         this.recipes = [];
         this.recipes.push(...all);
         if (this.recipes.length > 0) {

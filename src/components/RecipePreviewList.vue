@@ -54,6 +54,12 @@ export default {
           withCredentials: true
         });
         const recipes = response.data;
+
+        recipes.forEach(recipe => {
+          recipe.watched = false;
+          recipe.favorite = false;
+        });
+
         if (this.$root.store.username) {
           let ids = [];
           recipes.forEach(element => {
@@ -79,7 +85,7 @@ export default {
         }
         this.recipes = [];
         this.recipes.push(...recipes);
-        // console.log(this.recipes);
+        console.log(this.recipes);
       } catch (error) {
         console.log(error);
       }
