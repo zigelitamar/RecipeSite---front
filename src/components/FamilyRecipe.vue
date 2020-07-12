@@ -11,6 +11,7 @@
     >
       <b-card-text>
         <ul class="recipe-overview">
+          <h1>noa</h1>
           <li>{{ recipe.duration }}</li>
           <li>By: {{ recipe.author }}</li>
           <li>Occasions: {{ recipe.occasions }}</li>
