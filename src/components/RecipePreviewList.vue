@@ -47,6 +47,8 @@ export default {
           endpoint = "https://recipestest1.herokuapp.com/recipes/randomrecipe";
         } else if (type == "lastSeen" && this.$root.store.username) {
           endpoint = "https://recipestest1.herokuapp.com/user/lastseen";
+        } else if (type == "favorite" && this.$root.store.username) {
+          endpoint = "https://recipestest1.herokuapp.com/user/getFavorites";
         }
         const response = await this.axios.get(endpoint, {
           withCredentials: true

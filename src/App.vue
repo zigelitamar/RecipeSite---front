@@ -2,11 +2,11 @@
   <div id="app">
     <b-navbar type="dark" variant="dark">
       <b-navbar-nav>
-        <b-nav-item>
-          <router-link :to="{ name: 'main' }"></router-link>Vue Recipes
-        </b-nav-item>
+        <b-nav-item :to="{ name: 'main' }">Home</b-nav-item>
+        <!-- <router-link :to="{ name: 'main' }"></router-link>Home -->
+
         <b-nav-item :to="{ name: 'search' }">Search</b-nav-item>
-        {{ !$root.store.username }}
+        <b-nav-item :to="{ name: 'About' }">About</b-nav-item>
         <b-nav-item v-if="!$root.store.username">
           <router-link :to="{ name: 'register' }">Register</router-link>|
           <router-link :to="{ name: 'login' }">Login</router-link>|
@@ -16,16 +16,11 @@
           <button @click="Logout">Logout</button>|
         </b-nav-item>
         <!-- Navbar dropdowns -->
-        <b-nav-item-dropdown text="Lang" right>
-          <b-dropdown-item href="#">EN</b-dropdown-item>
-          <b-dropdown-item href="#">ES</b-dropdown-item>
-          <b-dropdown-item href="#">RU</b-dropdown-item>
-          <b-dropdown-item href="#">FA</b-dropdown-item>
-        </b-nav-item-dropdown>
 
-        <b-nav-item-dropdown text="User" right>
-          <b-dropdown-item href="#">Account</b-dropdown-item>
-          <b-dropdown-item href="#">Settings</b-dropdown-item>
+        <b-nav-item-dropdown v-if="$root.store.username" text="User" right>
+          <router-link :to="{ name: 'FavoriteRec' }" tag="b-dropdown-item">Favorite recipes</router-link>
+          <router-link :to="{ name: 'privateRec' }" tag="b-dropdown-item">Private Recipes</router-link>
+          <router-link :to="{ name: 'FamilyRec' }" tag="b-dropdown-item">Family recipes</router-link>
         </b-nav-item-dropdown>
       </b-navbar-nav>
     </b-navbar>
