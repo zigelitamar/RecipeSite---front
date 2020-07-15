@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div>
     <div v-if="recipe">
       <div class="recipe-header mt-3 mb-4">
         <h1>{{ recipe.recipe_name }}</h1>
@@ -9,10 +9,9 @@
         <div class="wrapper">
           <div class="wrapped">
             <div class="mb-3">
-                <div>author: {{ recipe.author }}</div>
-                <div>we made this on: {{ recipe.occasions }}</div>
+              <div>author: {{ recipe.author }}</div>
+              <div>we made this on: {{ recipe.occasions }}</div>
               <div>Ready in: {{ recipe.duration }}</div>
-
             </div>Ingredients:
             <ul>
               <li
@@ -51,11 +50,11 @@ export default {
 
       try {
         const id = this.$route.params.recipeId;
-        let url = "https://recipestest1.herokuapp.com/user/fullFamilyRecipe/" + id;
+        let url =
+          "https://recipestest1.herokuapp.com/user/fullFamilyRecipe/" + id;
         response = await this.axios.get(url);
 
         if (response.status !== 200) this.$router.replace("/NotFound");
-      
       } catch (error) {
         console.log("error.response.status", error.response.status);
         this.$router.replace("/NotFound");
@@ -69,11 +68,11 @@ export default {
         instructions,
         ingredients,
         duration,
-        image,
+        image
       } = response.data;
 
-      let _instructions = instructions.split("\n")
-      console.log(_instructions)
+      let _instructions = instructions.split("\n");
+      console.log(_instructions);
 
       let _recipe = {
         recipe_name,
@@ -82,7 +81,7 @@ export default {
         _instructions,
         ingredients,
         duration,
-        image,
+        image
       };
 
       this.recipe = _recipe;

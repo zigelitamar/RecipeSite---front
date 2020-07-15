@@ -2,26 +2,37 @@
   <div id="app">
     <b-navbar type="dark" variant="dark">
       <b-navbar-nav>
-        <b-nav-item :to="{ name: 'main' }">Home</b-nav-item>
+        <b-nav-item :to="{ name: 'main' }">
+          <b-icon icon="house-door-fill" />Home
+        </b-nav-item>
         <!-- <router-link :to="{ name: 'main' }"></router-link>Home -->
 
-        <b-nav-item :to="{ name: 'search' }">Search</b-nav-item>
-        <b-nav-item :to="{ name: 'About' }">About</b-nav-item>
-        <b-nav-item v-if="!$root.store.username">
-          <router-link :to="{ name: 'register' }">Register</router-link>|
-          <router-link :to="{ name: 'login' }">Login</router-link>|
+        <b-nav-item :to="{ name: 'search' }">
+          <b-icon icon="search" />Search
         </b-nav-item>
-        <b-nav-item v-else>
-          {{ $root.store.username }}:
-          <button @click="Logout">Logout</button>|
+        <b-nav-item :to="{ name: 'About' }">
+          <b-icon icon="info-circle" />About
         </b-nav-item>
+        <b-nav-item v-if="!$root.store.username" class="legislate" :to="{ name: 'register' }">
+          <b-icon icon="pencil" rotate="270" />Register
+        </b-nav-item>
+        <b-nav-item v-if="!$root.store.username" class="legislate" :to="{ name: 'login' }">
+          <b-icon icon="people" />Login
+        </b-nav-item>
+        <b-nav-item v-if="$root.store.username">{{ $root.store.username }}:</b-nav-item>
+
         <!-- Navbar dropdowns -->
 
-        <b-nav-item-dropdown v-if="$root.store.username" text="User" right>
+        <b-nav-item-dropdown v-if="$root.store.username" text="Account" right>
           <router-link :to="{ name: 'FavoriteRec' }" tag="b-dropdown-item">Favorite recipes</router-link>
           <router-link :to="{ name: 'privateRec' }" tag="b-dropdown-item">Private Recipes</router-link>
           <router-link :to="{ name: 'FamilyRec' }" tag="b-dropdown-item">Family recipes</router-link>
         </b-nav-item-dropdown>
+        <b-nav-item v-if="$root.store.username">
+          <b-button @click="Logout">
+            <b-icon icon="power" aria-hidden="true" font-scale="1"></b-icon>Logout
+          </b-button>
+        </b-nav-item>
       </b-navbar-nav>
     </b-navbar>
     <router-view />
@@ -53,6 +64,9 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   color: #2c3e50;
   min-height: 100vh;
+}
+.legislate {
+  color: #2c3e50;
 }
 
 #nav {

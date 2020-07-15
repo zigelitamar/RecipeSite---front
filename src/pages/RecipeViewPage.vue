@@ -2,19 +2,40 @@
   <div class="container">
     <div v-if="recipe">
       <div class="recipe-header mt-3 mb-4">
-        <h1>{{ recipe.title }}</h1>
-        <b-button @click="addfave">
-          <img src="../images/pngguru.com.png" />
-        </b-button>
+        <h1 class="head">{{ recipe.title }}</h1>
+
         <img :src="recipe.image" class="center" />
+        <b-button @click="addfave" v-if="recipe.favorite==false" variant="link">
+          <b-icon-heart font-scale="2" />
+        </b-button>
+        <b-modal ref="my-modal" hide-footer title>
+          <div class="d-block text-center">
+            <h3>Oh no, This is exclusive content!</h3>
+          </div>
+          <br />
+          <b-button class="mt-3" variant="outline-danger" block @click="Login">Login</b-button>
+          <br />
+
+          <b-button class="mt-2" variant="outline-danger" block @click="Register">Join us!</b-button>
+        </b-modal>
+        <b-icon-heart-fill v-if="recipe.favorite==true " font-scale="2" animation="throb" />
       </div>
       <div class="recipe-body">
         <div class="wrapper">
           <div class="wrapped">
             <div class="mb-3">
-              <div>Ready in: {{ recipe.readyInMinutes }} minutes</div>
-              <div>Likes: {{ recipe.aggregateLikes }} likes</div>
-              <div>Servings: {{recipe.servings}}</div>
+              <div>
+                <b-icon icon="clock"></b-icon>
+                {{ recipe.readyInMinutes }} minutes
+              </div>
+              <div>
+                <b-icon icon="hand-thumbs-up"></b-icon>
+                Likes: {{ recipe.aggregateLikes }} likes
+              </div>
+              <div>
+                <b-icon icon="tools"></b-icon>
+                Servings: {{recipe.servings}}
+              </div>
               <img v-if="recipe.vegan==true" src="../images/pngguru.com.png" height="50" width="50" />
               <img
                 v-if="recipe.vegetarian==true"
@@ -58,7 +79,8 @@
 export default {
   data() {
     return {
-      recipe: null
+      recipe: null,
+      favorite: false
     };
   },
   methods: {
@@ -70,10 +92,21 @@ export default {
             id: this.$route.params.recipeId
           }
         );
-        alert("added");
+        this.recipe.favorite = true;
+        this.recipe.watched = true;
       } else {
-        alert("cant add");
+        this.$refs["my-modal"].show();
       }
+    },
+    Login() {
+      this.$router.push("/login").catch(() => {
+        this.$forceUpdate();
+      });
+    },
+    Register() {
+      this.$router.push("/register").catch(() => {
+        this.$forceUpdate();
+      });
     }
   },
   async created() {
@@ -102,6 +135,7 @@ export default {
       }
 
       let {
+        id,
         analyzedInstructions,
         instructions,
         extendedIngredients,
@@ -123,6 +157,7 @@ export default {
         .reduce((a, b) => [...a, ...b], []);
 
       let _recipe = {
+        id,
         instructions,
         _instructions,
         vegetarian,
@@ -135,6 +170,19 @@ export default {
         servings,
         title
       };
+      _recipe.favorite = false;
+      let ids = [];
+      ids.push(_recipe.id);
+      if (this.$root.store.username) {
+        const res = await this.axios.get(
+          "https://recipestest1.herokuapp.com/user/recipeInfo/" +
+            JSON.stringify(ids),
+          {
+            withCredentials: true
+          }
+        );
+        _recipe.favorite = res.data.favorite;
+      }
 
       this.recipe = _recipe;
     } catch (error) {
@@ -145,6 +193,10 @@ export default {
 </script>
 
 <style scoped>
+.container {
+  font-family: Verdana;
+  font: bold;
+}
 .wrapper {
   display: flex;
 }
