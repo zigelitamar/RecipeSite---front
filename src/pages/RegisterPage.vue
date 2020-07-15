@@ -1,5 +1,6 @@
 <template>
   <div class="container">
+       <br>    
     <h1 class="title">Register</h1>
     <b-form @submit.prevent="onRegister" @reset.prevent="onReset">
       <b-form-group
@@ -280,5 +281,8 @@ export default {
 <style lang="scss" scoped>
 .container {
   max-width: 500px;
+  margin-left: 250px;
+  font-size: 19.5px;
+
 }
 </style>

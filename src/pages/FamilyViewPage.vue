@@ -1,9 +1,9 @@
 <template>
-  <div>
+  <div class="container">
     <div v-if="recipe">
       <div class="recipe-header mt-3 mb-4">
         <h1>{{ recipe.recipe_name }}</h1>
-        <img :src="recipe.image" class="center" height="330" width="200" />
+        <img :src="recipe.image" class="center" height="300" width="300" />
       </div>
       <div class="recipe-body">
         <div class="wrapper">
@@ -107,7 +107,6 @@ export default {
   display: block;
   margin-left: auto;
   margin-right: auto;
-  width: 50%;
 }
 /* .recipe-header{
 

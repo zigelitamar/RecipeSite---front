@@ -1,13 +1,16 @@
 <template>
   <b-container>
+    <br>
+    <br>
     <div v-if="(this.recipes.length==0)">
-      <strong>Loading...</strong>
+      <!-- <strong>Loading...</strong>
       <b-spinner label="Spinning"></b-spinner>
       <b-spinner type="grow" label="Spinning"></b-spinner>
-      <b-spinner variant="primary" label="Spinning"></b-spinner>
-      <b-spinner variant="primary" type="grow" label="Spinning"></b-spinner>
-      <b-spinner variant="success" label="Spinning"></b-spinner>
-      <b-spinner variant="success" type="grow" label="Spinning"></b-spinner>
+     -->
+      <b-button variant="dark" disabled>
+    <b-spinner small type="grow"></b-spinner>
+    Loading...
+  </b-button>
     </div>
     <b-card-group deck>
       <!-- <h2>

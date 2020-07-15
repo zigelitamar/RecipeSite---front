@@ -1,5 +1,8 @@
 <template>
   <div class="container">
+    <br>
+    <br>
+
     <h1 class="title">Login</h1>
     <b-form @submit.prevent="onLogin">
       <b-form-group
@@ -120,5 +123,6 @@ export default {
 <style lang="scss" scoped>
 .container {
   max-width: 400px;
+   margin-left: 300px;
 }
 </style>

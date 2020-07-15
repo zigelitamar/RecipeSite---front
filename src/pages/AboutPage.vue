@@ -7,7 +7,7 @@
     <br />
     <h4>
     <div class="connect">
-    <img class="center" alt src="../images/noa2.jpeg" />
+    <img class="center" alt src="../images/noa.jpeg" />
            </div>
     </h4>
 
@@ -31,8 +31,8 @@
     >Part 3.2</a>
     <br />
      <br />
-    <a href="mailto:noaweiss6@gmail.com"><img src="../images/noaMail.png" width="48" height="48" margin-bottom:100px></a>
-       <a href="mailto:noaweiss6@gmail.com"><img src="../images/itamarMail.png" width="48" height="48" margin-up:100px></a>
+    <a href="mailto:noaweiss6@gmail.com"><img src="../images/noaMail.png" width="42" height="42" ><img/></a>
+       <a href="mailto:noaweiss6@gmail.com"><img src="../images/itamarMail.png" width="42" height="42"></a>
     </h4>
   </div>
     </div>
@@ -43,18 +43,18 @@ h4{
 text-align: center
 }
 .avatar{
-    margin: auto;
+   margin-left: 140px;
   width: 40%;
-  border: 3px solid green;
+  border: 3px solid rgb(128, 0, 17);
   padding: 5px;
   background: white;
   color: black;
 }
 .connect img {
-  width: 100px;
-  height: 100px;
-  max-width: 100px;
-  max-height: 100px;
+  width: 125px;
+  height: 125px;
+  max-width: 150px;
+  max-height: 150px;
   -webkit-border-radius: 60%;
   -moz-border-radius: 60%;
   border-radius: 60%;
