@@ -1,6 +1,7 @@
 <template>
   <div id="app">
-    <b-navbar type="dark" variant="dark">
+  	<link href='https://fonts.googleapis.com/css?family=Amaranth' rel='stylesheet'>
+    <b-navbar type="light" variant="light">
       <b-navbar-nav>
         <b-nav-item :to="{ name: 'main' }">
           <b-icon icon="house-door-fill" />Home
@@ -13,13 +14,15 @@
         <b-nav-item :to="{ name: 'About' }">
           <b-icon icon="info-circle" />About
         </b-nav-item>
+          </b-navbar-nav>
+            <b-navbar-nav class="ml-auto">
         <b-nav-item v-if="!$root.store.username" class="legislate" :to="{ name: 'register' }">
           <b-icon icon="pencil" rotate="270" />Register
         </b-nav-item>
         <b-nav-item v-if="!$root.store.username" class="legislate" :to="{ name: 'login' }">
           <b-icon icon="people" />Login
         </b-nav-item>
-        <b-nav-item v-if="$root.store.username">{{ $root.store.username }}:</b-nav-item>
+        <b-nav-item size="sm" class="mr-sm-2" v-if="$root.store.username">{{ $root.store.username }}:</b-nav-item>
 
         <!-- Navbar dropdowns -->
 
@@ -55,27 +58,35 @@ export default {
 };
 </script>
 
+
 <style lang="scss">
 @import "@/scss/form-style.scss";
 
 #app {
+  background-image: url(./images/3218521.jpg);
+  background-repeat: no-repeat;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  color: #2c3e50;
+  color: white;
   min-height: 100vh;
-}
-.legislate {
-  color: #2c3e50;
+  font-family: 'Amaranth';font-size: 22px;
 }
 
 #nav {
   padding: 30px;
+    font-family: 'Amaranth';font-size: 22px;
 }
 
 #nav a {
   font-weight: bold;
-  color: #2c3e50;
+  font-family: 'Amaranth';font-size: 22px;
+  color:  #ffffff
+
 }
 
 #nav a.router-link-exact-active {

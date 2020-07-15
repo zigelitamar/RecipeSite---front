@@ -83,14 +83,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.containerimage {
-  background-size: 100% 100%;
-  background-image: url("../images/lukas-blazek-f-TWhXOrLiU-unsplash.jpg");
-  // -webkit-background-size: cover;
-  // -moz-background-size: cover;
-  // -o-background-size: cover;
-  // background-size: cover;
-}
+
 .RandomRecipes {
   margin: 10px 0 10px;
 }
