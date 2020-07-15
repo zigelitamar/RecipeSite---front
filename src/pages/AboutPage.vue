@@ -2,6 +2,9 @@
 <div>
  <br />
  <br />
+  <br />
+
+ <br />
   <div class="avatar">
       <link href='https://fonts.googleapis.com/css?family=Amaranth' rel='stylesheet'>
     <br />
@@ -49,7 +52,8 @@ text-align: center
   width: 40%;
   border: 3px solid green;
   padding: 5px;
-    font-family: 'Amaranth';font-size: 22px;
+    background: white;
+    color: black;
 }
 .connect img {
   width: 100px;
