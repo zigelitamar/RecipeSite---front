@@ -132,7 +132,7 @@ h2 {
   /*box styles*/
   height: 200px;
   width: 400px;
-  margin: 50px auto;
+  // margin: 50px auto;
 
   /*shadow*/
   -webkit-box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.3);
