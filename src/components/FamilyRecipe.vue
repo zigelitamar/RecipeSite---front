@@ -1,11 +1,11 @@
 <template>
-  <div>
+  <div id=family>
     <b-card :title="recipe.recipe_name" tag="article" style="max-width: 20rem;" class="mb-2">
       <router-link
         :to="{ name: 'familyrecipe', params: { recipeId: recipe.recipe_id } }"
         class="recipe-preview"
       >
-        <b-card-img :src="recipe.image" img-alt="Image" img-top />
+        <b-card-img :src="recipe.image" img-alt="Image" img-top height="275" width="250" />
       </router-link>
       <b-card-text>
         <ul class="recipe-overview">
@@ -33,6 +33,9 @@ export default {
 </script>
     
 <style>
+	#family{	
+  color: black;	
+}
 .recipe-preview {
   display: inline-block;
   width: 90%;

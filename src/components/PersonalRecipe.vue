@@ -1,5 +1,5 @@
 <template>
-<div>
+<div id="personal">
     <b-card
       :title="recipe.recipe_name"
       tag="article"
@@ -7,7 +7,7 @@
       class="mb-2"
     >
   <router-link :to="{ name: 'privaterecipe', params: { recipeId: recipe.recipe_id } }" class="recipe-preview">
-    <b-card-img :src="recipe.image"  img-alt="Image" img-top/>
+    <b-card-img :src="recipe.image"  img-alt="Image" img-top height="275" width="250"/>
      </router-link>
       <b-card-text>
         <ul class="recipe-overview">
@@ -33,6 +33,10 @@ export default {
 </script>
     
 <style>
+
+	#personal{	
+  color:black;	
+}
 .recipe-preview {
   display: inline-block;
   width: 90%;

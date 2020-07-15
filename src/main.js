@@ -30,6 +30,9 @@ import {
   ModalPlugin,
   InputGroupPlugin,
   ButtonGroupPlugin,
+  PopoverPlugin,
+  SpinnerPlugin,
+  TabsPlugin,
 } from "bootstrap-vue";
 [
   FormGroupPlugin,
@@ -46,6 +49,9 @@ import {
   ModalPlugin,
   InputGroupPlugin,
   ButtonGroupPlugin,
+  PopoverPlugin,
+  SpinnerPlugin,
+  TabsPlugin,
 ].forEach((x) => Vue.use(x));
 
 Vue.use(Vuelidate);

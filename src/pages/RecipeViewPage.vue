@@ -4,8 +4,41 @@
       <div class="recipe-header mt-3 mb-4">
         <h1 class="head">{{ recipe.title }}</h1>
 
-        <img :src="recipe.image" class="center" />
-        <b-button @click="addfave" v-if="recipe.favorite==false" variant="link">
+        <img :src="recipe.image" class="rounded-circle" />
+      </div>
+      <b-tabs content-class="mt-3">
+        <div class="mb-3">
+          <div>
+            <b-icon icon="clock"></b-icon>
+            {{ recipe.readyInMinutes }} minutes
+          </div>
+          <div>
+            <b-icon icon="hand-thumbs-up"></b-icon>
+            Likes: {{ recipe.aggregateLikes }} likes
+          </div>
+          <div>
+            <b-icon icon="tools"></b-icon>
+            Servings: {{recipe.servings}}
+          </div>
+          <img v-if="recipe.vegan==true" src="../images/pngguru.com.png" height="50" width="50" />
+          <img
+            v-if="recipe.vegetarian==true"
+            src="../images/hiclipart.com.png"
+            height="50"
+            width="50"
+          />
+          <img
+            v-if="recipe.glutenFree==true"
+            src="../images/marshmallow-on-stick-free-png-8-original.png"
+            height="50"
+            width="50"
+          />
+        </div>
+        <b-button
+          v-b-popover.hover.top="'Add to favorites'"
+          @click="addfave"
+          v-if="recipe.favorite==false"
+        >
           <b-icon-heart font-scale="2" />
         </b-button>
         <b-modal ref="my-modal" hide-footer title>
@@ -19,58 +52,28 @@
           <b-button class="mt-2" variant="outline-danger" block @click="Register">Join us!</b-button>
         </b-modal>
         <b-icon-heart-fill v-if="recipe.favorite==true " font-scale="2" animation="throb" />
-      </div>
-      <div class="recipe-body">
-        <div class="wrapper">
+        <b-tab title="Ingredients" active>
           <div class="wrapped">
-            <div class="mb-3">
-              <div>
-                <b-icon icon="clock"></b-icon>
-                {{ recipe.readyInMinutes }} minutes
-              </div>
-              <div>
-                <b-icon icon="hand-thumbs-up"></b-icon>
-                Likes: {{ recipe.aggregateLikes }} likes
-              </div>
-              <div>
-                <b-icon icon="tools"></b-icon>
-                Servings: {{recipe.servings}}
-              </div>
-              <img v-if="recipe.vegan==true" src="../images/pngguru.com.png" height="50" width="50" />
-              <img
-                v-if="recipe.vegetarian==true"
-                src="../images/hiclipart.com.png"
-                height="50"
-                width="50"
-              />
-              <img
-                v-if="recipe.glutenFree==true"
-                src="../images/marshmallow-on-stick-free-png-8-original.png"
-                height="50"
-                width="50"
-              />
-              <div></div>
-            </div>Ingredients:
-            <ul>
-              <li
-                v-for=" r in recipe.extendedIngredients"
-                :key="r.id"
-              >{{ r.name }} - {{r.amount}} {{r.unit}}</li>
-            </ul>
+            <div class="round3">
+              <ul>
+                <li
+                  v-for=" r in recipe.extendedIngredients"
+                  :key="r.id"
+                >{{ r.name }} - {{r.amount}} {{r.unit}}</li>
+              </ul>
+            </div>
           </div>
+        </b-tab>
+        <b-tab title="Instructions">
           <div class="wrapped">
-            Instructions:
-            <ol>
-              <li v-for="s in recipe._instructions" :key="s.number">{{ s.step }}</li>
-            </ol>
+            <div class="round3">
+              <ol>
+                <li v-for="s in recipe._instructions" :key="s.number">{{ s.step }}</li>
+              </ol>
+            </div>
           </div>
-        </div>
-      </div>
-      <!-- <pre>
-      {{ $route.params }}
-      {{ recipe }}
-    </pre
-      >-->
+        </b-tab>
+      </b-tabs>
     </div>
   </div>
 </template>
@@ -193,6 +196,10 @@ export default {
 </script>
 
 <style scoped>
+.round3 {
+  border: 2px solid white;
+  border-radius: 12px;
+}
 .container {
   font-family: Verdana;
   font: bold;
@@ -201,6 +208,11 @@ export default {
   display: flex;
 }
 .wrapped {
+  width: 85%;
+  height: 60%;
+  backdrop-filter: blur(4px);
+}
+.wrapped2 {
   width: 50%;
 }
 .center {

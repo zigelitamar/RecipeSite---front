@@ -3,7 +3,7 @@
     <div v-if="recipe">
       <div class="recipe-header mt-3 mb-4">
         <h1>{{ recipe.recipe_name }}</h1>
-        <img :src="recipe.image" class="center" />
+        <img :src="recipe.image" class="center" height="330" width="200" />
       </div>
       <div class="recipe-body">
         <div class="wrapper">
@@ -22,9 +22,7 @@
           </div>
           <div class="wrapped">
             Instructions:
-            <ol>
-              <li v-for="s in recipe._instructions" :key="s">{{ s }}</li>
-            </ol>
+        <p v-for="s in recipe._instructions" :key="s">{{ s }}</p>
           </div>
         </div>
       </div>
@@ -93,6 +91,12 @@ export default {
 </script>
 
 <style scoped>
+
+	.p{	
+  font-family: 'Amaranth';font-size: 22px;	
+  color:  #ffffff;	
+  font-display: inherit;	
+}
 .wrapper {
   display: flex;
 }

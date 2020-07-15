@@ -2,6 +2,15 @@
   <div>
     <h1 class="title">Search Page</h1>
     <div class="formdiv">
+      <b-modal ref="my-modal2" hide-footer title>
+        <div class="d-block text-center">
+          <h3>
+            Cant search , try to write at the search input ?
+            <b-icon-emoji-angry />
+          </h3>
+        </div>
+        <br />
+      </b-modal>
       <b-form @submit.prevent="onSearch">
         <b-form-group>
           <b-input-group size="sm" class="mb-2">
@@ -43,6 +52,15 @@
         >Search</b-button>
       </b-form>
     </div>
+    <div v-if="(this.statredSearch)" style="text-align:center">
+      <strong>Loading...</strong>
+      <b-spinner label="Spinning"></b-spinner>
+      <b-spinner type="grow" label="Spinning"></b-spinner>
+      <b-spinner variant="primary" label="Spinning"></b-spinner>
+      <b-spinner variant="primary" type="grow" label="Spinning"></b-spinner>
+      <b-spinner variant="success" label="Spinning"></b-spinner>
+      <b-spinner variant="success" type="grow" label="Spinning"></b-spinner>
+    </div>
 
     <div v-if="flag" class="mt-3">
       <b-button-group>
@@ -61,10 +79,19 @@
       </b-button-group>
     </div>
     <div v-if="flag" :style="gridStyle" class="grid">
-      <div v-for="r in recipes" :key="r.id" class="card">
+      <div v-for="r in recipes" :key="r.id">
         <RecipePreview :recipe="r" />
       </div>
     </div>
+    <b-modal ref="my-modal" hide-footer title>
+      <div class="d-block text-center">
+        <h3>
+          Sorry no results for this query
+          <b-icon-emoji-frown />
+        </h3>
+      </div>
+      <br />
+    </b-modal>
   </div>
 </template>
 
@@ -93,7 +120,8 @@ export default {
       flag: false,
       noresults: false,
       recipes: [],
-      numberOfColumns: 3
+      numberOfColumns: 3,
+      statredSearch: false
     };
   },
   mounted() {
@@ -122,61 +150,68 @@ export default {
       }
     },
     async Search() {
-      try {
-        let search_params = {};
-        if (this.form.Diet != null) {
-          search_params.diet = this.form.Diet;
-        }
-        if (this.form.Cuisine != null) {
-          search_params.cuisine = this.form.Cuisine;
-        }
-        if (this.form.Intolerence != null) {
-          search_params.intolerance = this.form.Intolerence;
-        }
-
-        const res = await this.axios.get(
-          `https://recipestest1.herokuapp.com/recipes/search/query/${this.form.searchQ}/amount/${this.form.number}`,
-          { params: search_params }
-        );
-        let all = res.data;
-        if (this.$root.store.username) {
-          let ids = [];
-          all.forEach(element => {
-            ids.push(element.id);
-          });
+      if (this.form.searchQ.length == 0) {
+        this.$refs["my-modal2"].show();
+      } else {
+        try {
+          let search_params = {};
+          if (this.form.Diet != null) {
+            search_params.diet = this.form.Diet;
+          }
+          if (this.form.Cuisine != null) {
+            search_params.cuisine = this.form.Cuisine;
+          }
+          if (this.form.Intolerence != null) {
+            search_params.intolerance = this.form.Intolerence;
+          }
 
           const res = await this.axios.get(
-            "https://recipestest1.herokuapp.com/user/recipeInfo/" +
-              JSON.stringify(ids),
-            {
-              withCredentials: true
-            }
+            `https://recipestest1.herokuapp.com/recipes/search/query/${this.form.searchQ}/amount/${this.form.number}`,
+            { params: search_params }
           );
+          let all = res.data;
+          if (this.$root.store.username) {
+            let ids = [];
+            all.forEach(element => {
+              ids.push(element.id);
+            });
 
-          for (let key in res.data) {
-            all.forEach(recipe => {
-              if (recipe.id == key) {
-                recipe.watched = res.data[key].watched;
-                recipe.favorite = res.data[key].favorite;
+            const res = await this.axios.get(
+              "https://recipestest1.herokuapp.com/user/recipeInfo/" +
+                JSON.stringify(ids),
+              {
+                withCredentials: true
               }
+            );
+
+            for (let key in res.data) {
+              all.forEach(recipe => {
+                if (recipe.id == key) {
+                  recipe.watched = res.data[key].watched;
+                  recipe.favorite = res.data[key].favorite;
+                }
+              });
+            }
+          } else {
+            all.forEach(recipe => {
+              recipe.watched = false;
+              recipe.favorite = false;
             });
           }
-        } else {
-          all.forEach(recipe => {
-            recipe.watched = false;
-            recipe.favorite = false;
-          });
+          this.recipes = [];
+          this.recipes.push(...all);
+          if (this.recipes.length > 0) {
+            this.statredSearch = false;
+            this.flag = true;
+          } else {
+            this.statredSearch = false;
+            this.noresults = true;
+            this.$refs["my-modal"].show();
+          }
+        } catch (err) {
+          console.log(err.res);
+          this.form.submitError = err.res.data.message;
         }
-        this.recipes = [];
-        this.recipes.push(...all);
-        if (this.recipes.length > 0) {
-          this.flag = true;
-        } else {
-          this.noresults = true;
-        }
-      } catch (err) {
-        console.log(err.res);
-        this.form.submitError = err.res.data.message;
       }
     },
     onSearch() {
@@ -206,8 +241,5 @@ export default {
 .grid {
   display: grid;
   grid-gap: 1em;
-}
-.card {
-  padding: 1em;
 }
 </style>

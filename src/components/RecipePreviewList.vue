@@ -1,16 +1,24 @@
 <template>
   <b-container>
-    <div class="containers">
+    <div v-if="(this.recipes.length==0)">
+      <strong>Loading...</strong>
+      <b-spinner label="Spinning"></b-spinner>
+      <b-spinner type="grow" label="Spinning"></b-spinner>
+      <b-spinner variant="primary" label="Spinning"></b-spinner>
+      <b-spinner variant="primary" type="grow" label="Spinning"></b-spinner>
+      <b-spinner variant="success" label="Spinning"></b-spinner>
+      <b-spinner variant="success" type="grow" label="Spinning"></b-spinner>
+    </div>
+    <b-card-group deck>
       <!-- <h2>
         {{ title }}:
         <slot></slot>
       </h2>-->
-    </div>
-    <b-col>
+
       <b-row v-for="r in recipes" :key="r.id">
         <RecipePreview class="recipePreview" :recipe="r" />
       </b-row>
-    </b-col>
+    </b-card-group>
   </b-container>
 </template>
 
