@@ -39,7 +39,7 @@
         type="submit"
         variant="primary"
         style="width:100px;display:block;"
-        class="mx-auto w-100"
+        class="mx-auto w-50"
       >Login</b-button>
       <div class="mt-2">
         Do not have an account yet?
