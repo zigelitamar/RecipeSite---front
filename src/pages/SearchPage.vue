@@ -4,7 +4,12 @@
     <div class="formdiv">
       <b-form @submit.prevent="onSearch">
         <b-form-group>
-          <b-form-input id="searchQ" v-model="form.searchQ" type="text" placeholder="search..."></b-form-input>
+          <b-input-group size="sm" class="mb-2">
+            <b-input-group-prepend is-text>
+              <b-icon icon="search"></b-icon>
+            </b-input-group-prepend>
+            <b-form-input id="searchQ" v-model="form.searchQ" type="text" placeholder="search..."></b-form-input>
+          </b-input-group>
         </b-form-group>
         <b-form-group
           id="input-group-resultnum"
@@ -15,11 +20,20 @@
           <b-form-select id="resultnum" v-model="form.number" :options="resultNum"></b-form-select>
         </b-form-group>
         <b-form-group label="Choose your filters:">
-          <b-form-select id="Diet" v-model="form.Diet" :options="diets"></b-form-select>
-
-          <b-form-select id="Cuisine" v-model="form.Cuisine" :options="cuisines"></b-form-select>
-
-          <b-form-select id="Intolerence" v-model="form.Intolerence" :options="intolerences"></b-form-select>
+          <b-row class="mb-3">
+            <b-form-select size="sm" id="Diet" v-model="form.Diet" :options="diets"></b-form-select>
+          </b-row>
+          <b-row class="mb-3">
+            <b-form-select size="sm" id="Cuisine" v-model="form.Cuisine" :options="cuisines"></b-form-select>
+          </b-row>
+          <b-row class="mb-3">
+            <b-form-select
+              size="sm"
+              id="Intolerence"
+              v-model="form.Intolerence"
+              :options="intolerences"
+            ></b-form-select>
+          </b-row>
         </b-form-group>
         <b-button
           type="submit"
@@ -28,28 +42,28 @@
           class="mx-auto w-100"
         >Search</b-button>
       </b-form>
-      <div v-if="flag">
+    </div>
+
+    <div v-if="flag" class="mt-3">
+      <b-button-group>
         <b-button
           @click="sortby('time')"
-          variant="primary"
+          variant="info"
           style="width:100px;display:block;"
           class="mx-auto w-100"
         >Sort by time</b-button>
         <b-button
           @click="sortby('pop')"
-          variant="primary"
+          variant="info"
           style="width:100px;display:block;"
           class="mx-auto w-100"
         >Sort by popularity</b-button>
-      </div>
+      </b-button-group>
     </div>
-
-    <div v-if="flag">
-      <ul :style="gridStyle" class="grid">
-        <li v-for="r in recipes" :key="r.id" class="card">
-          <RecipePreview :recipe="r" />
-        </li>
-      </ul>
+    <div v-if="flag" :style="gridStyle" class="grid">
+      <div v-for="r in recipes" :key="r.id" class="card">
+        <RecipePreview :recipe="r" />
+      </div>
     </div>
   </div>
 </template>
@@ -147,6 +161,11 @@ export default {
               }
             });
           }
+        } else {
+          all.forEach(recipe => {
+            recipe.watched = false;
+            recipe.favorite = false;
+          });
         }
         this.recipes = [];
         this.recipes.push(...all);
@@ -177,11 +196,18 @@ export default {
   height: 400px;
   width: 500px;
 }
+.formdiv2 {
+  margin: auto;
+  position: relative;
+  text-align: center;
+  top: 50%;
+  width: 20%;
+}
 .grid {
   display: grid;
   grid-gap: 1em;
 }
 .card {
-  padding: 2em;
+  padding: 1em;
 }
 </style>

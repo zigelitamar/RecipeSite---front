@@ -1,15 +1,32 @@
 <template>
-  <div>
-    <b-card :title="recipe.title" tag="article" style="max-width: 20rem;" class="mb-2">
+  <div class="card">
+    <b-card
+      border-variant="secondary"
+      :header="recipe.title"
+      tag="article"
+      style="max-width: 20rem;"
+      class="mb-2"
+    >
       <router-link :to="{ name: 'recipe', params: { recipeId: recipe.id } }" class="recipe-preview">
-        <b-card-img :src="recipe.image" alt="Image" top />
+        <b-card-img :src="recipe.image" top />
       </router-link>
-      <div>
-        <b-button v-if="recipe.favorite==false" variant="light" @click="addfave">
+      <div class="signs">
+        <b-button id="toggle-btn" v-if="recipe.favorite==false" variant="light" @click="addfave">
           <b-icon-heart v-if="recipe.favorite==false " font-scale="2" />
         </b-button>
-        <b-icon-heart-fill v-if="recipe.favorite==true " font-scale="2" animation="throb" />
+        <b-modal ref="my-modal" hide-footer title>
+          <div class="d-block text-center">
+            <h3>Oh no, This is exclusive content!</h3>
+          </div>
+          <br />
+          <b-button class="mt-3" variant="outline-danger" block @click="Login">Login</b-button>
+          <br />
 
+          <b-button class="mt-2" variant="outline-danger" block @click="Register">Join us!</b-button>
+        </b-modal>
+        <div class="divider" />
+        <b-icon-heart-fill v-if="recipe.favorite==true " font-scale="2" animation="throb" />
+        <div class="divider" />
         <b-icon-eye-fill v-if="recipe.watched==true " font-scale="2" />
       </div>
       <b-card-text>
@@ -49,8 +66,6 @@ export default {
 
   methods: {
     async addfave() {
-    let test= this.$props.recipe.id
-     console.log(test);
       try {
         if (this.$root.store.username) {
           const res1 = await this.axios.post(
@@ -59,91 +74,37 @@ export default {
               id: this.$props.recipe.id
             }
           );
-          alert("added");
+          this.recipe.favorite = true;
+          this.recipe.watched = true;
         } else {
-          alert("cant add");
+          this.$refs["my-modal"].show();
         }
       } catch (err) {
         console.log(err);
       }
+    },
+    Login() {
+      this.$router.push("/login").catch(() => {
+        this.$forceUpdate();
+      });
+    },
+    Register() {
+      this.$router.push("/register").catch(() => {
+        this.$forceUpdate();
+      });
     }
   }
 };
 </script>
 
 <style scoped>
-.recipe-preview {
-  display: inline-block;
-  width: 90%;
-  height: 100%;
-  position: relative;
-  margin: 10px 10px;
+.card {
+  font-family: Verdana;
+  font: bold;
 }
-.recipe-preview > .recipe-body {
-  width: 100%;
-  height: 200px;
-  position: relative;
-}
-
-.recipe-preview .recipe-body .recipe-image {
-  margin-left: auto;
-  margin-right: auto;
-  margin-top: auto;
-  margin-bottom: auto;
-  display: block;
-  width: 98%;
+.divider {
+  width: 5px;
   height: auto;
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  background-size: cover;
-}
-
-.recipe-preview .recipe-footer {
-  width: 100%;
-  height: 50%;
-  overflow: hidden;
-}
-
-.recipe-preview .recipe-footer .recipe-title {
-  padding: 10px 10px;
-  width: 100%;
-  font-size: 12pt;
-  text-align: left;
-  white-space: nowrap;
-  overflow: hidden;
-  -o-text-overflow: ellipsis;
-  text-overflow: ellipsis;
-}
-
-.recipe-preview .recipe-footer ul.recipe-overview {
-  padding: 5px 10px;
-  width: 100%;
-  display: -webkit-box;
-  display: -moz-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-flex: 1;
-  -moz-box-flex: 1;
-  -o-box-flex: 1;
-  box-flex: 1;
-  -webkit-flex: 1 auto;
-  -ms-flex: 1 auto;
-  flex: 1 auto;
-  table-layout: fixed;
-  margin-bottom: 0px;
-}
-
-.recipe-preview .recipe-footer ul.recipe-overview li {
-  -webkit-box-flex: 1;
-  -moz-box-flex: 1;
-  -o-box-flex: 1;
-  -ms-box-flex: 1;
-  box-flex: 1;
-  -webkit-flex-grow: 1;
-  flex-grow: 1;
-  width: 90px;
-  display: table-cell;
-  text-align: center;
+  display: inline-block;
 }
 </style>
