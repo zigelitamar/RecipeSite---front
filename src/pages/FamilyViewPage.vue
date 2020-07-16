@@ -4,33 +4,41 @@
       <div class="recipe-header mt-3 mb-4">
         <h1>{{ recipe.recipe_name }}</h1>
         <img :src="recipe.image" class="center" height="300" width="300" />
+        <div class="mb-2">
+           <br>
+           
+            <b-icon icon="clock"></b-icon>
+            {{ recipe.duration }} 
+           <div>author: {{ recipe.author }}</div>
+            <div>we made this on: {{ recipe.occasions }}</div>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+          </div>
       </div>
-      <div class="recipe-body">
-        <div class="wrapper">
+        <b-tabs content-class="mt-2">
+        <b-tab title="Ingredients" :title-item-class="'tab-title-class'" active>
           <div class="wrapped">
-            <div class="mb-3">
-              <div>author: {{ recipe.author }}</div>
-              <div>we made this on: {{ recipe.occasions }}</div>
-              <div>Ready in: {{ recipe.duration }}</div>
-            </div>Ingredients:
-            <ul>
+            <div class="round3">
+              <ul>
               <li
                 v-for=" r in recipe.ingredients"
                 :key="r.id"
               >{{ r.name }} - {{r.quantity}} {{r.unit}}</li>
             </ul>
           </div>
+           </div>
+          </b-tab>
+           <b-tab title="Instructions">
           <div class="wrapped">
-            Instructions:
+            <div class="round3">
         <p v-for="s in recipe._instructions" :key="s">{{ s }}</p>
           </div>
         </div>
-      </div>
-      <!-- <pre>
-      {{ $route.params }}
-      {{ recipe }}
-    </pre
-      >-->
+      </b-tab>
+      </b-tabs>
     </div>
   </div>
 </template>
@@ -101,12 +109,17 @@ export default {
   display: flex;
 }
 .wrapped {
-  width: 50%;
+    width: 85%;
+  height: 60%;
+  backdrop-filter: blur(4px);
 }
 .center {
   display: block;
   margin-left: auto;
   margin-right: auto;
+}
+img {
+  float: left;
 }
 /* .recipe-header{
 

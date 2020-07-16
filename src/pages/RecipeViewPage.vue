@@ -4,10 +4,9 @@
       <div class="recipe-header mt-3 mb-4">
         <h1 class="head">{{ recipe.title }}</h1>
 
-        <img :src="recipe.image" class="rounded-circle" />
-      </div>
-      <b-tabs content-class="mt-3">
-        <div class="mb-3">
+        <img :src="recipe.image" height="250" width="250" />
+        <div>
+        <div class="mb-2">
           <div>
             <b-icon icon="clock"></b-icon>
             {{ recipe.readyInMinutes }} minutes
@@ -52,7 +51,16 @@
           <b-button class="mt-2" variant="outline-danger" block @click="Register">Join us!</b-button>
         </b-modal>
         <b-icon-heart-fill v-if="recipe.favorite==true " font-scale="2" animation="throb" />
-        <b-tab title="Ingredients" active>
+        <br>
+        <br>
+        <br>
+        <br>
+       
+        </div>
+      </div>
+      <b-tabs content-class="mt-2">
+        
+        <b-tab title="Ingredients" :title-item-class="'tab-title-class'" active>
           <div class="wrapped">
             <div class="round3">
               <ul>
@@ -200,10 +208,6 @@ export default {
   border: 2px solid white;
   border-radius: 12px;
 }
-.container {
-  font-family: Verdana;
-  font: bold;
-}
 .wrapper {
   display: flex;
 }
@@ -220,6 +224,12 @@ export default {
   margin-left: auto;
   margin-right: auto;
   width: 50%;
+}
+.tab-title-class {
+  color: white !important;
+}
+img {
+  float: left;
 }
 /* .recipe-header{
 

@@ -38,7 +38,7 @@
        
         <b-col>
           <div class="notConnected" v-if="!$root.store.username">
-            <LoginPage style=" margin-left: 50px;"/>
+            <LoginPage style=" margin-left: -50px;"/>
           </div>
           <!-- <router-link
             v-if="!$root.store.username"
