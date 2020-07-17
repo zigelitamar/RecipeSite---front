@@ -1,8 +1,6 @@
 <template>
   <div>
-    <br>
-    <h1 class="title"  style ="margin-left: 420px;">Search Page</h1>
-    <div id="search">
+    <h1 class="title">Search Page</h1>
     <div class="formdiv">
       <b-modal ref="my-modal2" hide-footer title>
         <div class="d-block text-center">
@@ -15,7 +13,7 @@
       </b-modal>
       <b-form @submit.prevent="onSearch">
         <b-form-group>
-          <b-input-group size="sm" class="mx-auto w-50">
+          <b-input-group size="sm" class="mb-2">
             <b-input-group-prepend is-text>
               <b-icon icon="search"></b-icon>
             </b-input-group-prepend>
@@ -24,25 +22,22 @@
         </b-form-group>
         <b-form-group
           id="input-group-resultnum"
-          label-cols-sm="5"
+          label-cols-sm="3"
           label="Resaults:"
           label-for="resultnum"
-          class="mx-auto w-50"
         >
           <b-form-select id="resultnum" v-model="form.number" :options="resultNum"></b-form-select>
         </b-form-group>
         <b-form-group label="Choose your filters:">
-          <b-row class="mx-auto w-50">
-            <b-form-select size="sm " id="Diet" v-model="form.Diet" :options="diets"></b-form-select>
+          <b-row class="mb-3">
+            <b-form-select size="sm" id="Diet" v-model="form.Diet" :options="diets"></b-form-select>
           </b-row>
-          <br>
-          <b-row class="mx-auto w-50">
-            <b-form-select size="sm " id="Cuisine" v-model="form.Cuisine" :options="cuisines"></b-form-select>
+          <b-row class="mb-3">
+            <b-form-select size="sm" id="Cuisine" v-model="form.Cuisine" :options="cuisines"></b-form-select>
           </b-row>
-          <br>
-          <b-row class="mx-auto w-50">
+          <b-row class="mb-3">
             <b-form-select
-              size="sm "
+              size="sm"
               id="Intolerence"
               v-model="form.Intolerence"
               :options="intolerences"
@@ -53,22 +48,18 @@
           type="submit"
           variant="primary"
           style="width:100px;display:block;"
-          class="mx-auto w-50"
+          class="mx-auto w-100"
         >Search</b-button>
       </b-form>
     </div>
     <div v-if="(this.statredSearch)" style="text-align:center">
-      <!-- <strong>Loading...</strong>
+      <strong>Loading...</strong>
       <b-spinner label="Spinning"></b-spinner>
       <b-spinner type="grow" label="Spinning"></b-spinner>
       <b-spinner variant="primary" label="Spinning"></b-spinner>
       <b-spinner variant="primary" type="grow" label="Spinning"></b-spinner>
       <b-spinner variant="success" label="Spinning"></b-spinner>
-      <b-spinner variant="success" type="grow" label="Spinning"></b-spinner> -->
-    <b-button variant="dark" disabled>
-    <b-spinner small type="grow"></b-spinner>
-    Loading...
-  </b-button>
+      <b-spinner variant="success" type="grow" label="Spinning"></b-spinner>
     </div>
 
     <div v-if="flag" class="mt-3">
@@ -102,7 +93,6 @@
       <br />
     </b-modal>
   </div>
-   </div>
 </template>
 
 <script>
@@ -136,8 +126,11 @@ export default {
   },
   mounted() {
     // console.log("mounted");
+    this.intolerences.push("-");
     this.intolerences.push(...intolerences);
+    this.diets.push("-");
     this.diets.push(...diets);
+    this.cuisines.push("-");
     this.cuisines.push(...cuisines);
     // console.log($v);
   },
@@ -165,13 +158,13 @@ export default {
       } else {
         try {
           let search_params = {};
-          if (this.form.Diet != null) {
+          if (this.form.Diet != null || this.form.Diet == "-") {
             search_params.diet = this.form.Diet;
           }
-          if (this.form.Cuisine != null) {
+          if (this.form.Cuisine != null || this.form.Cuisine == "-") {
             search_params.cuisine = this.form.Cuisine;
           }
-          if (this.form.Intolerence != null) {
+          if (this.form.Intolerence != null || this.form.Intolerence == "-") {
             search_params.intolerance = this.form.Intolerence;
           }
 
@@ -232,17 +225,13 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
-
-#search{
-   margin-left: -450px;
-   
+.form {
+  text-align: left;
 }
-
 .formdiv {
   margin: auto;
   position: relative;
-  text-align: center;
+  text-align: left;
   top: 50%;
   width: 20%;
   height: 400px;

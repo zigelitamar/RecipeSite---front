@@ -10,35 +10,32 @@
 
     <b-container>
       <b-row>
-
-         <b-col>
+        <b-col>
           <RecipePreviewList
             :key="random"
             rType="rand"
             title="Randome Recipes"
             class="RandomRecipes center"
           />
-           <b-col cols="1">
-          <b-button v-if="random>1" class="mb-2" variant="outline-danger" @click="getRandom">
-            <b-iconstack font-scale="3" animation="cylon-vertical" @click="getRandom">
-              <b-icon stacked icon="square"></b-icon>
-              <b-icon stacked icon="dot" shift-h="-3" shift-v="4"></b-icon>
-              <b-icon stacked icon="dot" shift-h="-3"></b-icon>
-              <b-icon stacked icon="dot" shift-h="-3" shift-v="-4"></b-icon>
-              <b-icon stacked icon="dot" shift-h="3" shift-v="4"></b-icon>
-              <b-icon stacked icon="dot" shift-h="3"></b-icon>
-              <b-icon stacked icon="dot" shift-h="3" shift-v="-4"></b-icon>
-            </b-iconstack>
-            <p>Explore recipes</p>
-          </b-button>
-        </b-col>
+          <b-col cols="1">
+            <b-button class="mb-2" variant="outline-danger" @click="getRandom">
+              <b-iconstack font-scale="3" animation="cylon-vertical" @click="getRandom">
+                <b-icon stacked icon="square"></b-icon>
+                <b-icon stacked icon="dot" shift-h="-3" shift-v="4"></b-icon>
+                <b-icon stacked icon="dot" shift-h="-3"></b-icon>
+                <b-icon stacked icon="dot" shift-h="-3" shift-v="-4"></b-icon>
+                <b-icon stacked icon="dot" shift-h="3" shift-v="4"></b-icon>
+                <b-icon stacked icon="dot" shift-h="3"></b-icon>
+                <b-icon stacked icon="dot" shift-h="3" shift-v="-4"></b-icon>
+              </b-iconstack>
+              <p>Explore recipes</p>
+            </b-button>
+          </b-col>
         </b-col>
 
-       
-       
         <b-col>
           <div class="notConnected" v-if="!$root.store.username">
-            <LoginPage style=" margin-left: -50px;"/>
+            <LoginPage style=" margin-left: -50px;" />
           </div>
           <!-- <router-link
             v-if="!$root.store.username"
@@ -84,7 +81,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
 .RandomRecipes {
   margin: 10px 0 10px;
 }
