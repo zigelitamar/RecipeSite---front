@@ -53,7 +53,8 @@ export default {
     Logout() {
       this.$root.store.logout();
       this.$root.toast("Logout", "User logged out successfully", "success");
-
+      this.$store.search = [];
+      this.$store.favorites = [];
       this.$router.push("/").catch(() => {
         this.$forceUpdate();
       });

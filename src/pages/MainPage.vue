@@ -16,6 +16,7 @@
             rType="rand"
             title="Randome Recipes"
             class="RandomRecipes center"
+            ref="randRef"
           />
           <b-col cols="1">
             <b-button class="mb-2" variant="outline-danger" @click="getRandom">
@@ -35,13 +36,8 @@
 
         <b-col>
           <div class="notConnected" v-if="!$root.store.username">
-            <LoginPage style=" margin-left: -50px;" />
+            <LoginPage :loginMain="refreshPreviews" style=" margin-left: -50px;" />
           </div>
-          <!-- <router-link
-            v-if="!$root.store.username"
-            to="/login"
-            tag="button"
-          >You need to Login to vue this</router-link>-->
           <RecipePreviewList
             v-if="$root.store.username"
             title="Last Viewed Recipes"
@@ -51,11 +47,6 @@
         </b-col>
       </b-row>
     </b-container>
-    <!-- <div
-      style="position: absolute;top: 70%;left: 50%;transform: translate(-50%, -50%);"
-    >
-      Centeredasdasdad
-    </div>-->
   </div>
 </template>
 
@@ -72,9 +63,13 @@ export default {
       random: 1
     };
   },
+  watch: {},
   methods: {
     async getRandom() {
       this.random += 1;
+    },
+    refreshPreviews() {
+      this.$refs.randRef.updateChilds();
     }
   }
 };

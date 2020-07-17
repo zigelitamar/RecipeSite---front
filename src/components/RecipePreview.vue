@@ -77,6 +77,8 @@ export default {
           );
           this.recipe.favorite = true;
           this.recipe.watched = true;
+          this.$store.favorites.push(this.recipe);
+          console.log(this.$store.favorites);
         } else {
           this.$refs["my-modal"].show();
         }

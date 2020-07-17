@@ -5,6 +5,7 @@
       <b-spinner label="Spinning"></b-spinner>
       <b-spinner type="grow" label="Spinning"></b-spinner>
       -->
+
       <b-button variant="dark" disabled>
         <b-spinner small type="grow"></b-spinner>Loading...
       </b-button>
@@ -14,10 +15,9 @@
         {{ title }}:
         <slot></slot>
     </h2>-->
-
-    <b-row v-for="r in recipes" :key="r.id">
-      <RecipePreview class="recipePreview" :recipe="r" />
-    </b-row>
+    <b-card-group deck class="cardgroup" v-for="r in recipes" :key="r.id">
+      <RecipePreview :recipe="r" :key="update" />
+    </b-card-group>
   </div>
 </template>
 
@@ -41,62 +41,93 @@ export default {
   },
   data() {
     return {
-      recipes: []
+      recipes: [],
+      update: false,
+      favoritesOfUser: false
     };
   },
   mounted() {
+    this.checkuser();
     this.updateRecipes();
   },
+
   methods: {
-    async updateRecipes() {
-      try {
-        const type = this.rType;
-        let endpoint = "";
-        if (type == "rand") {
-          endpoint = "https://recipestest1.herokuapp.com/recipes/randomrecipe";
-        } else if (type == "lastSeen" && this.$root.store.username) {
-          endpoint = "https://recipestest1.herokuapp.com/user/lastseen";
-        } else if (type == "favorite" && this.$root.store.username) {
-          endpoint = "https://recipestest1.herokuapp.com/user/getFavorites";
+    checkuser() {
+      if (this.$root.store.username && this.rType == "favorite") {
+        if (this.$store.favorites.length > 0) {
+          this.recipes.push(...this.$store.favorites);
+          this.favoritesOfUser == true;
+          console.log("hi i came back");
+          console.log(this.$store.favorites);
         }
-        const response = await this.axios.get(endpoint, {
-          withCredentials: true
-        });
-        const recipes = response.data;
+      }
+    },
+    async updateRecipes() {
+      if (this.favoritesOfUser == false) {
+        try {
+          const type = this.rType;
+          let endpoint = "";
+          if (type == "rand") {
+            endpoint =
+              "https://recipestest1.herokuapp.com/recipes/randomrecipe";
+          } else if (type == "lastSeen" && this.$root.store.username) {
+            endpoint = "https://recipestest1.herokuapp.com/user/lastseen";
+          } else if (type == "favorite" && this.$root.store.username) {
+            endpoint = "https://recipestest1.herokuapp.com/user/getFavorites";
+          }
+          const response = await this.axios.get(endpoint, {
+            withCredentials: true
+          });
+          const recipes = response.data;
 
-        recipes.forEach(recipe => {
-          recipe.watched = false;
-          recipe.favorite = false;
-        });
-
-        if (this.$root.store.username) {
-          let ids = [];
-          recipes.forEach(element => {
-            ids.push(element.id);
+          recipes.forEach(recipe => {
+            recipe.watched = false;
+            recipe.favorite = false;
           });
 
-          const res = await this.axios.get(
-            "https://recipestest1.herokuapp.com/user/recipeInfo/" +
-              JSON.stringify(ids),
-            {
-              withCredentials: true
-            }
-          );
-
-          for (let key in res.data) {
-            recipes.forEach(recipe => {
-              if (recipe.id == key) {
-                recipe.watched = res.data[key].watched;
-                recipe.favorite = res.data[key].favorite;
-              }
+          if (this.$root.store.username) {
+            let ids = [];
+            recipes.forEach(element => {
+              ids.push(element.id);
             });
+
+            const res = await this.axios.get(
+              "https://recipestest1.herokuapp.com/user/recipeInfo/" +
+                JSON.stringify(ids),
+              {
+                withCredentials: true
+              }
+            );
+
+            for (let key in res.data) {
+              recipes.forEach(recipe => {
+                if (recipe.id == key) {
+                  recipe.watched = res.data[key].watched;
+                  recipe.favorite = res.data[key].favorite;
+                }
+              });
+            }
           }
+          this.recipes = [];
+          this.recipes.push(...recipes);
+          if (this.$root.store.username && this.rType == "favorite") {
+            if (this.$store.favorites.length == 0) {
+              this.$store.favorites.push(...this.recipes);
+              console.log("firstentrence");
+              console.log(this.$store.favorites);
+            }
+          }
+          // console.log(this.recipes);
+        } catch (error) {
+          console.log(error);
         }
-        this.recipes = [];
-        this.recipes.push(...recipes);
-        console.log(this.recipes);
-      } catch (error) {
-        console.log(error);
+      }
+    },
+    updateChilds() {
+      if (update == true) {
+        update = false;
+      } else {
+        update = true;
       }
     }
   }
@@ -111,6 +142,9 @@ h2 {
   font-weight: bold;
   text-align: center;
   text-shadow: rgba(0, 0, 0, 0.3) 5px 5px 5px;
+}
+.cardgroup {
+  display: flex;
 }
 
 #containers {

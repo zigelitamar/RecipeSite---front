@@ -98,7 +98,8 @@ const shared_data = {
 };
 console.log(shared_data);
 // Vue.prototype.$root.store = shared_data;
-
+import { user_data } from "./user_data";
+Vue.prototype.$store = user_data;
 new Vue({
   router,
   data() {

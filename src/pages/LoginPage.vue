@@ -1,7 +1,7 @@
 <template>
   <div class="container">
-    <br>
-    <br>
+    <br />
+    <br />
 
     <h1 class="title">Login</h1>
     <b-form @submit.prevent="onLogin">
@@ -98,9 +98,12 @@ export default {
         );
         // console.log(response);
         // this.$root.loggedIn = true;
-        console.log(this.$root.store.login);
+        this.$emit("loginMain");
+
         this.$root.store.login(this.form.username);
-        this.$router.push("/");
+        if (this.$router.currentRoute.path != "/") {
+          this.$router.push("/");
+        }
       } catch (err) {
         console.log(err.response);
         this.form.submitError = err.response.data.message;
@@ -123,6 +126,6 @@ export default {
 <style lang="scss" scoped>
 .container {
   max-width: 400px;
-   margin-left: 300px;
+  margin-left: 300px;
 }
 </style>

@@ -132,6 +132,7 @@ export default {
     this.diets.push(...diets);
     this.cuisines.push("-");
     this.cuisines.push(...cuisines);
+    this.checkuserSearch();
     // console.log($v);
   },
   computed: {
@@ -141,7 +142,17 @@ export default {
       };
     }
   },
+
   methods: {
+    checkuserSearch() {
+      //console.log(this.$store.search);
+      if (this.$root.store.username) {
+        if (this.$store.search.length > 0) {
+          this.recipes.push(...this.$store.search);
+          this.flag = true;
+        }
+      }
+    },
     sortby(el) {
       if (el == "time") {
         this.recipes.sort((a, b) => a.readyInMinutes - b.readyInMinutes);
@@ -210,6 +221,14 @@ export default {
             this.statredSearch = false;
             this.noresults = true;
             this.$refs["my-modal"].show();
+          }
+          if (this.$root.store.username) {
+            if (this.$store.search.length == 0) {
+              this.$store.search.push(...this.recipes);
+            } else {
+              this.$store.search = [];
+              this.$store.search.push(...this.recipes);
+            }
           }
         } catch (err) {
           console.log(err.res);
