@@ -176,7 +176,7 @@ export default {
             search_params.cuisine = this.form.Cuisine;
           }
           if (this.form.Intolerence != null || this.form.Intolerence == "-") {
-            search_params.intolerance = this.form.Intolerence;
+            search_params.intolerances = this.form.Intolerence;
           }
 
           const res = await this.axios.get(

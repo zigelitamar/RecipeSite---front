@@ -14,7 +14,7 @@
           <RecipePreviewList
             :key="random"
             rType="rand"
-            title="Explore our word"
+            title="Explore our world"
             class="RandomRecipes center"
             ref="randRef"
           />

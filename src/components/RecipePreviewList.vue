@@ -1,23 +1,40 @@
 <template>
   <div>
-    <div v-if="(this.recipes.length==0)">
-      <!-- <strong>Loading...</strong>
+    <div>
+      <h2>
+        {{ title }}:
+        <slot></slot>
+      </h2>
+      <div v-if="(this.recipes.length==0 && haveRec)">
+        <!-- <strong>Loading...</strong>
       <b-spinner label="Spinning"></b-spinner>
       <b-spinner type="grow" label="Spinning"></b-spinner>
-      -->
+        -->
 
-      <b-button variant="dark" disabled>
-        <b-spinner small type="grow"></b-spinner>Loading...
-      </b-button>
+        <b-button variant="dark" disabled>
+          <b-spinner small type="grow"></b-spinner>Loading...
+        </b-button>
+      </div>
+      <b-card-group deck class="cardgroup" v-for="r in recipes" :key="r.id">
+        <RecipePreview :recipe="r" :key="update" />
+      </b-card-group>
     </div>
+    <div v-if="!haveRec">
+      <b-jumbotron bg-variant="dark" text-variant="white" border-variant="light">
+        <template v-slot:header>Hi there rookie</template>
 
-    <h2>
-      {{ title }}:
-      <slot></slot>
-    </h2>
-    <b-card-group deck class="cardgroup" v-for="r in recipes" :key="r.id">
-      <RecipePreview :recipe="r" :key="update" />
-    </b-card-group>
+        <template v-slot:lead>
+          We in Recipe Planet hope you had an easy experience signing up!
+          you can explore via the 'explore recipes'
+          button on the bottom of the "
+          <router-link :to="{ name: 'main' }">Home</router-link>" screen or use our excellent search system
+        </template>
+
+        <hr class="my-4" />
+
+        <p>Dont forget to add your favorite recipes for not losing track !</p>
+      </b-jumbotron>
+    </div>
   </div>
 </template>
 
@@ -43,7 +60,8 @@ export default {
     return {
       recipes: [],
       update: false,
-      favoritesOfUser: false
+      favoritesOfUser: false,
+      haveRec: true
     };
   },
   mounted() {
@@ -79,6 +97,9 @@ export default {
             withCredentials: true
           });
           const recipes = response.data;
+          if (response.status == 204) {
+            this.haveRec = false;
+          }
 
           recipes.forEach(recipe => {
             recipe.watched = false;
@@ -135,13 +156,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-h2 {
-  font-size: 40px;
-  line-height: 100px;
-  font-family: Helvetica, sans-serif;
-  font-weight: bold;
-  text-shadow: rgba(0, 0, 0, 0.3) 5px 5px 5px;
-}
 .cardgroup {
   display: flex;
 }

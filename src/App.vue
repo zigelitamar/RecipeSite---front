@@ -4,6 +4,9 @@
     <b-navbar type="light" variant="light">
       <b-navbar-nav>
         <b-nav-item :to="{ name: 'main' }">
+          <img src="./images/chili.png" height="40" width="120" />
+        </b-nav-item>
+        <b-nav-item :to="{ name: 'main' }">
           <b-icon icon="house-door-fill" />Home
         </b-nav-item>
         <!-- <router-link :to="{ name: 'main' }"></router-link>Home -->
