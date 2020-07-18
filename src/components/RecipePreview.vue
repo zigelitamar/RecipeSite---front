@@ -8,8 +8,9 @@
     class="mb-5 bg-white rounded"
   >
     <router-link :to="{ name: 'recipe', params: { recipeId: recipe.id } }">
-      <b-card-img :src="recipe.image" />
-    </router-link>
+      <b-card-img  v-if="recipe.image" :src="recipe.image" />
+      <b-icon v-else icon="cloud-slash" font-scale="7.5"></b-icon> 
+     </router-link>
     <div class="signs">
       <b-button
         v-b-popover.hover.top="'Add to favorites'"

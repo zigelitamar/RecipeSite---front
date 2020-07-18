@@ -1,7 +1,7 @@
 <template>
-  <div>
+   <b-container>
     <RecipePreviewList rType="favorite" title="my favorite Recipes" />
-  </div>
+  </b-container>
 </template>
 
 <script>

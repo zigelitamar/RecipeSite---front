@@ -13,7 +13,7 @@
       </b-modal>
       <b-form @submit.prevent="onSearch">
         <b-form-group>
-          <b-input-group size="sm" class="mb-2">
+          <b-input-group class="mx-auto w-50">
             <b-input-group-prepend is-text>
               <b-icon icon="search"></b-icon>
             </b-input-group-prepend>
@@ -22,22 +22,24 @@
         </b-form-group>
         <b-form-group
           id="input-group-resultnum"
-          label-cols-sm="3"
+           label-cols-sm="3"
+           label-cols-size="sm"
+          label-align-sm="left"
           label="Resaults:"
           label-for="resultnum"
         >
           <b-form-select id="resultnum" v-model="form.number" :options="resultNum"></b-form-select>
         </b-form-group>
         <b-form-group label="Choose your filters:">
-          <b-row class="mb-3">
-            <b-form-select size="sm" id="Diet" v-model="form.Diet" :options="diets"></b-form-select>
+          <b-row class="mx-auto w-50">
+            <b-form-select id="Diet" v-model="form.Diet" :options="diets"></b-form-select>
           </b-row>
-          <b-row class="mb-3">
-            <b-form-select size="sm" id="Cuisine" v-model="form.Cuisine" :options="cuisines"></b-form-select>
+          <b-row class="mx-auto w-50">
+            <b-form-select  id="Cuisine" v-model="form.Cuisine" :options="cuisines"></b-form-select>
           </b-row>
-          <b-row class="mb-3">
+          <b-row class="mx-auto w-50">
             <b-form-select
-              size="sm"
+             
               id="Intolerence"
               v-model="form.Intolerence"
               :options="intolerences"
@@ -47,8 +49,8 @@
         <b-button
           type="submit"
           variant="primary"
-          style="width:100px;display:block;"
-          class="mx-auto w-100"
+          style="width:50px;display:block;"
+          class="mx-auto w-50"
         >Search</b-button>
       </b-form>
     </div>
@@ -244,11 +246,14 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.title{
+  margin-left: 300px;
+}
 .form {
   text-align: left;
 }
 .formdiv {
-  margin: auto;
+margin-left: 300px;
   position: relative;
   text-align: left;
   top: 50%;
@@ -257,7 +262,7 @@ export default {
   width: 500px;
 }
 .formdiv2 {
-  margin: auto;
+
   position: relative;
   text-align: center;
   top: 50%;
