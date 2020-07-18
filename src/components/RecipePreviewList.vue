@@ -11,10 +11,10 @@
       </b-button>
     </div>
 
-    <!-- <h2>
-        {{ title }}:
-        <slot></slot>
-    </h2>-->
+    <h2>
+      {{ title }}:
+      <slot></slot>
+    </h2>
     <b-card-group deck class="cardgroup" v-for="r in recipes" :key="r.id">
       <RecipePreview :recipe="r" :key="update" />
     </b-card-group>
@@ -136,11 +136,10 @@ export default {
 
 <style lang="scss" scoped>
 h2 {
-  font-size: 60px;
+  font-size: 40px;
   line-height: 100px;
   font-family: Helvetica, sans-serif;
   font-weight: bold;
-  text-align: center;
   text-shadow: rgba(0, 0, 0, 0.3) 5px 5px 5px;
 }
 .cardgroup {

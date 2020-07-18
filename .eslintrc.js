@@ -1,7 +1,7 @@
 module.exports = {
   root: true,
   env: {
-    node: true
+    node: true,
   },
   extends: [
     "plugin:vue/essential",
@@ -9,15 +9,16 @@ module.exports = {
     "eslint:recommended",
     "standard",
     "@vue/prettier",
-    "prettier"
+    "prettier",
   ],
   parserOptions: {
-    parser: "babel-eslint"
+    parser: "babel-eslint",
   },
   extends: ["plugin:vue/essential"],
+
   rules: {
     "no-console": process.env.NODE_ENV === "production" ? "warn" : "off",
     "no-debugger": process.env.NODE_ENV === "production" ? "warn" : "off",
-    "no-unused-vars": process.env.NODE_ENV === "production" ? "warn" : "off"
-  }
+    "no-unused-vars": process.env.NODE_ENV === "production" ? "warn" : "off",
+  },
 };

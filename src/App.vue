@@ -73,7 +73,8 @@ export default {
   background-repeat: no-repeat;
   background-size: cover;
 
-  font-family: Avenir, Helvetica, Arial, sans-serif;
+  font-family: "Amaranth";
+  font-size: 22px;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: white;

@@ -14,7 +14,7 @@
           <RecipePreviewList
             :key="random"
             rType="rand"
-            title="Randome Recipes"
+            title="Explore our word"
             class="RandomRecipes center"
             ref="randRef"
           />
@@ -40,7 +40,7 @@
           </div>
           <RecipePreviewList
             v-if="$root.store.username"
-            title="Last Viewed Recipes"
+            title="My last seen"
             rType="lastSeen"
             class="RandomRecipes center"
           ></RecipePreviewList>

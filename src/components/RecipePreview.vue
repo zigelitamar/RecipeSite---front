@@ -1,14 +1,14 @@
 <template>
   <b-card
     id="preview"
-    border-variant="secondary"
+    header-text-variant="white"
+    header-bg-variant="dark"
     :header="recipe.title"
-    tag="article"
-    style="max-width: 20rem;"
-    class="shadow p-3 mb-5 bg-white rounded"
+    style="max-width: 22rem;min-width: 22rem;max-height:32rem;min-height:32rem"
+    class="mb-5 bg-white rounded"
   >
-    <router-link :to="{ name: 'recipe', params: { recipeId: recipe.id } }" class="recipe-preview">
-      <b-card-img :src="recipe.image" top />
+    <router-link :to="{ name: 'recipe', params: { recipeId: recipe.id } }">
+      <b-card-img :src="recipe.image" />
     </router-link>
     <div class="signs">
       <b-button
@@ -39,16 +39,18 @@
       <ul class="recipe-overview">
         <li>{{ recipe.readyInMinutes }} minutes</li>
         <li>{{ recipe.aggregateLikes }} likes</li>
-        <li v-if="recipe.vegan==true">
-          <img src="../images/pngguru.com.png" height="50" width="50" />
-        </li>
-        <li v-if="recipe.vegetarian==true">
-          <img src="../images/hiclipart.com.png" height="50" width="50" />
-        </li>
-        <li v-if="recipe.glutenFree==true">
-          <img src="../images/marshmallow-on-stick-free-png-8-original.png" height="50" width="50" />
-        </li>
       </ul>
+      <b-row>
+        <b-col v-if="recipe.vegan==true">
+          <img src="../images/pngguru.com.png" height="60" width="60" />
+        </b-col>
+        <b-col v-if="recipe.vegetarian==true">
+          <img src="../images/hiclipart.com.png" height="60" width="60" />
+        </b-col>
+        <b-col v-if="recipe.glutenFree==true">
+          <img src="../images/marshmallow-on-stick-free-png-8-original.png" height="60" width="60" />
+        </b-col>
+      </b-row>
     </b-card-text>
   </b-card>
 </template>
