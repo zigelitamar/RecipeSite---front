@@ -1,21 +1,28 @@
 <template>
-<div id="personal">
+  <div id="personal">
     <b-card
-      :title="recipe.recipe_name"
-      tag="article"
-      style="max-width: 20rem;"
-      class="mb-2"
+      id="preview"
+      header-text-variant="white"
+      header-bg-variant="dark"
+      :header="recipe.recipe_name"
+      style="max-width: 22rem;min-width: 22rem;max-height:32rem;min-height:32rem"
+      class="mb-5 bg-white rounded"
     >
-  <router-link :to="{ name: 'privaterecipe', params: { recipeId: recipe.recipe_id } }" class="recipe-preview">
-    <b-card-img :src="recipe.image"  img-alt="Image" img-top height="275" width="250"/>
-     </router-link>
+      <router-link
+        :to="{ name: 'privaterecipe', params: { recipeId: recipe.recipe_id } }"
+        class="recipe-preview"
+      >
+        <b-card-img :src="recipe.image" img-alt="Image" img-top height="275" width="250" />
+      </router-link>
       <b-card-text>
         <ul class="recipe-overview">
           <li>{{ recipe.duration }}</li>
+          <li v-if="recipe.author">By: {{ recipe.author }}</li>
+          <li v-if="recipe.occasions">Occasions: {{ recipe.occasions }}</li>
         </ul>
       </b-card-text>
     </b-card>
-    </div>
+  </div>
 </template>
 
 <script>
@@ -33,9 +40,8 @@ export default {
 </script>
     
 <style>
-
-	#personal{	
-  color:black;	
+#personal {
+  color: black;
 }
 .recipe-preview {
   display: inline-block;

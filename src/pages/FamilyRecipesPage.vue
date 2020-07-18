@@ -6,17 +6,17 @@
     </h3>
     <b-col>
       <b-row v-for="r in recipes" :key="r.id">
-        <FamilyRecipe :recipe="r" />
+        <PersonalRecipe :recipe="r" />
       </b-row>
     </b-col>
   </b-container>
 </template>
 
 <script>
-import FamilyRecipe from "../components/FamilyRecipe";
+import PersonalRecipe from "../components/PersonalRecipe";
 export default {
   components: {
-    FamilyRecipe
+    PersonalRecipe
   },
 
   data() {
