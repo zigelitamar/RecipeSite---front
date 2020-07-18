@@ -33,6 +33,7 @@ import {
   PopoverPlugin,
   SpinnerPlugin,
   TabsPlugin,
+  JumbotronPlugin,
 } from "bootstrap-vue";
 [
   FormGroupPlugin,
@@ -52,6 +53,7 @@ import {
   PopoverPlugin,
   SpinnerPlugin,
   TabsPlugin,
+  JumbotronPlugin,
 ].forEach((x) => Vue.use(x));
 
 Vue.use(Vuelidate);

@@ -5,39 +5,39 @@
         <h1>{{ recipe.recipe_name }}</h1>
         <img :src="recipe.image" class="center" height="300" width="300" />
         <div class="mb-2">
-           <br>
-           
-            <b-icon icon="clock"></b-icon>
-            {{ recipe.duration }} 
-           <div>author: {{ recipe.author }}</div>
-            <div>we made this on: {{ recipe.occasions }}</div>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-          </div>
+          <br />
+
+          <b-icon icon="clock"></b-icon>
+          {{ recipe.duration }}
+          <div>author: {{ recipe.author }}</div>
+          <div>we made this on: {{ recipe.occasions }}</div>
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
+        </div>
       </div>
-        <b-tabs content-class="mt-2">
+      <b-tabs content-class="mt-2">
         <b-tab title="Ingredients" :title-item-class="'tab-title-class'" active>
           <div class="wrapped">
             <div class="round3">
               <ul>
-              <li
-                v-for=" r in recipe.ingredients"
-                :key="r.id"
-              >{{ r.name }} - {{r.quantity}} {{r.unit}}</li>
-            </ul>
+                <li
+                  v-for=" r in recipe.ingredients"
+                  :key="r.id"
+                >{{ r.name }} - {{r.quantity}} {{r.unit}}</li>
+              </ul>
+            </div>
           </div>
-           </div>
-          </b-tab>
-           <b-tab title="Instructions">
+        </b-tab>
+        <b-tab title="Instructions">
           <div class="wrapped">
             <div class="round3">
-        <p v-for="s in recipe._instructions" :key="s">{{ s }}</p>
+              <p v-for="s in recipe._instructions" :key="s">{{ s }}</p>
+            </div>
           </div>
-        </div>
-      </b-tab>
+        </b-tab>
       </b-tabs>
     </div>
   </div>
@@ -99,17 +99,21 @@ export default {
 </script>
 
 <style scoped>
-
-	.p{	
-  font-family: 'Amaranth';font-size: 22px;	
-  color:  #ffffff;	
-  font-display: inherit;	
+.round3 {
+  border: 2px solid white;
+  border-radius: 12px;
+}
+.p {
+  font-family: "Amaranth";
+  font-size: 22px;
+  color: #ffffff;
+  font-display: inherit;
 }
 .wrapper {
   display: flex;
 }
 .wrapped {
-    width: 85%;
+  width: 85%;
   height: 60%;
   backdrop-filter: blur(4px);
 }

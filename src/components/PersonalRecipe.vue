@@ -9,7 +9,15 @@
       class="mb-5 bg-white rounded"
     >
       <router-link
+        v-if="!recipe.author"
         :to="{ name: 'privaterecipe', params: { recipeId: recipe.recipe_id } }"
+        class="recipe-preview"
+      >
+        <b-card-img :src="recipe.image" img-alt="Image" img-top height="275" width="250" />
+      </router-link>
+      <router-link
+        v-if="recipe.author"
+        :to="{ name: 'familyrecipe', params: { recipeId: recipe.recipe_id } }"
         class="recipe-preview"
       >
         <b-card-img :src="recipe.image" img-alt="Image" img-top height="275" width="250" />
