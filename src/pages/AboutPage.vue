@@ -9,6 +9,11 @@
       <h4>
         <div class="connect">
           <img class="center" alt src="../images/noa.jpeg" />
+          <img
+            class="center"
+            alt
+            src="../images/13247957_10209889107210611_755131273854173787_o.jpg"
+          />
         </div>
       </h4>
 
