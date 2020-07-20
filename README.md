@@ -1,6 +1,7 @@
 # assignment-3-2-v2-itamar_noa_ass3-1
 assignment-3-2-v2-itamar_noa_ass3-1 created by GitHub Classroom
-This is the Frontend of our site 'Recipe Planet'
+This is the Frontend of our site 'Recipe Planet'.
+
 server sitting in HEROKU - by from previous repository: 
 https://github.com/SISE-Web-Development-Environments/assignment-3-2-itamar_noa
 
