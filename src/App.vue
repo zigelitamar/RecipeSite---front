@@ -52,11 +52,19 @@
 <script>
 export default {
   name: "App",
+
   methods: {
-    Logout() {
+    async Logout() {
       this.$root.store.logout();
+      const response = await this.axios.post(
+        "https://recipestest1.herokuapp.com/guest/logout",
+        {}
+      );
       this.$root.toast("Logout", "User logged out successfully", "success");
       this.$store.search = [];
+      this.$store.favorites = [];
+      this.$store.family = [];
+      this.$store.private = [];
       this.$store.favorites = [];
       this.$router.push("/").catch(() => {
         this.$forceUpdate();

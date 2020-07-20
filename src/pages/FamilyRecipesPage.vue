@@ -4,6 +4,16 @@
       My family recipes
       <slot></slot>
     </h3>
+    <div v-if="(this.recipes.length==0 && haveFamRec)">
+      <!-- <strong>Loading...</strong>
+      <b-spinner label="Spinning"></b-spinner>
+      <b-spinner type="grow" label="Spinning"></b-spinner>
+      -->
+
+      <b-button variant="dark" disabled>
+        <b-spinner small type="grow"></b-spinner>Loading...
+      </b-button>
+    </div>
     <b-col>
       <b-row v-for="r in recipes" :key="r.id">
         <PersonalRecipe :recipe="r" />
@@ -23,7 +33,6 @@
         </template>
 
         <hr class="my-4" />
-
       </b-jumbotron>
     </div>
   </b-container>
@@ -40,27 +49,42 @@ export default {
     return {
       recipes: [],
       haveFamRec: true,
+      familyOfUser: false
     };
   },
   mounted() {
+    this.checkuser();
     this.updateRecipes();
   },
   methods: {
+    checkuser() {
+      if (this.$store.family.length > 0) {
+        console.log("cameback");
+        this.recipes.push(...this.$store.family);
+        this.familyOfUser == true;
+      }
+    },
     async updateRecipes() {
-      try {
-        let endpoint = "";
-        endpoint = "https://recipestest1.herokuapp.com/user/getfamilyrecipes";
-        const response = await this.axios.get(endpoint, {
-          withCredentials: true
-        });
-        if(response.status==204){
-          this.haveFamRec=false;
+      if (this.familyOfUser == false) {
+        try {
+          let endpoint = "";
+          endpoint = "https://recipestest1.herokuapp.com/user/getfamilyrecipes";
+          const response = await this.axios.get(endpoint, {
+            withCredentials: true
+          });
+          if (response.status == 204) {
+            this.haveFamRec = false;
+          }
+          this.recipes = [];
+          this.recipes.push(...response.data);
+          if (this.$store.family.length == 0) {
+            console.log("first time");
+            this.$store.family.push(...this.recipes);
+          }
+          // console.log(this.recipes);
+        } catch (error) {
+          console.log(error);
         }
-        this.recipes = [];
-        this.recipes.push(...response.data);
-        // console.log(this.recipes);
-      } catch (error) {
-        console.log(error);
       }
     }
   }

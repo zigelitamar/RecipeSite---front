@@ -94,6 +94,8 @@ const shared_data = {
   },
   logout() {
     console.log("logout");
+    Vue.$cookies.remove("session");
+
     localStorage.removeItem("username");
     this.username = undefined;
   },
@@ -109,6 +111,9 @@ new Vue({
       store: shared_data,
     };
   },
+  created() {
+    window.addEventListener("beforeunload", this.handlerClose);
+  },
   methods: {
     toast(title, content, variant = null, append = false) {
       this.$bvToast.toast(`${content}`, {
@@ -119,6 +124,11 @@ new Vue({
         appendToast: append,
         autoHideDelay: 3000,
       });
+    },
+
+    handlerClose() {
+      // localStorage.removeItem("username");
+      // this.username = undefined;
     },
   },
   render: (h) => h(App),

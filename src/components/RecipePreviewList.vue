@@ -1,10 +1,10 @@
 <template>
   <div>
     <div>
-      <h2>
+      <h3>
         {{ title }}:
         <slot></slot>
-      </h2>
+      </h3>
       <div v-if="(this.recipes.length==0 && haveRec)">
         <!-- <strong>Loading...</strong>
       <b-spinner label="Spinning"></b-spinner>
@@ -75,8 +75,6 @@ export default {
         if (this.$store.favorites.length > 0) {
           this.recipes.push(...this.$store.favorites);
           this.favoritesOfUser == true;
-          console.log("hi i came back");
-          console.log(this.$store.favorites);
         }
       }
     },
@@ -134,8 +132,6 @@ export default {
           if (this.$root.store.username && this.rType == "favorite") {
             if (this.$store.favorites.length == 0) {
               this.$store.favorites.push(...this.recipes);
-              console.log("firstentrence");
-              console.log(this.$store.favorites);
             }
           }
           // console.log(this.recipes);

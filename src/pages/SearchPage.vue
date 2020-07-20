@@ -20,30 +20,21 @@
             <b-form-input id="searchQ" v-model="form.searchQ" type="text" placeholder="search..."></b-form-input>
           </b-input-group>
         </b-form-group>
-        <b-form-group
-          id="input-group-resultnum"
-           label-cols-sm="3"
-           label-cols-size="sm"
-          label-align-sm="left"
-          label="Resaults:"
-          label-for="resultnum"
-        >
-          <b-form-select id="resultnum" v-model="form.number" :options="resultNum"></b-form-select>
+
+        <b-form-group label="Resaults:">
+          <b-row class="mx-auto w-50">
+            <b-form-select id="resultnum" v-model="form.number" :options="resultNum"></b-form-select>
+          </b-row>
         </b-form-group>
         <b-form-group label="Choose your filters:">
           <b-row class="mx-auto w-50">
             <b-form-select id="Diet" v-model="form.Diet" :options="diets"></b-form-select>
           </b-row>
           <b-row class="mx-auto w-50">
-            <b-form-select  id="Cuisine" v-model="form.Cuisine" :options="cuisines"></b-form-select>
+            <b-form-select id="Cuisine" v-model="form.Cuisine" :options="cuisines"></b-form-select>
           </b-row>
           <b-row class="mx-auto w-50">
-            <b-form-select
-             
-              id="Intolerence"
-              v-model="form.Intolerence"
-              :options="intolerences"
-            ></b-form-select>
+            <b-form-select id="Intolerence" v-model="form.Intolerence" :options="intolerences"></b-form-select>
           </b-row>
         </b-form-group>
         <b-button
@@ -68,18 +59,25 @@
       <b-button-group>
         <b-button
           @click="sortby('time')"
-          variant="info"
+          variant="dark"
           style="width:100px;display:block;"
           class="mx-auto w-100"
-        >Sort by time</b-button>
+        >
+          <b-icon-list-ol />Sort by time
+        </b-button>
         <b-button
           @click="sortby('pop')"
-          variant="info"
+          variant="dark"
           style="width:100px;display:block;"
           class="mx-auto w-100"
-        >Sort by popularity</b-button>
+        >
+          <b-icon-list-ol />Sort by popularity
+        </b-button>
       </b-button-group>
+      <br />
+      <br />
     </div>
+
     <div v-if="flag" :style="gridStyle" class="grid">
       <div v-for="r in recipes" :key="r.id">
         <RecipePreview :recipe="r" />
@@ -186,6 +184,10 @@ export default {
             { params: search_params }
           );
           let all = res.data;
+          all.forEach(recipe => {
+            recipe.watched = false;
+            recipe.favorite = false;
+          });
           if (this.$root.store.username) {
             let ids = [];
             all.forEach(element => {
@@ -208,11 +210,6 @@ export default {
                 }
               });
             }
-          } else {
-            all.forEach(recipe => {
-              recipe.watched = false;
-              recipe.favorite = false;
-            });
           }
           this.recipes = [];
           this.recipes.push(...all);
@@ -246,14 +243,14 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.title{
+.title {
   margin-left: 300px;
 }
 .form {
   text-align: left;
 }
 .formdiv {
-margin-left: 300px;
+  margin-left: 300px;
   position: relative;
   text-align: left;
   top: 50%;
@@ -262,7 +259,6 @@ margin-left: 300px;
   width: 500px;
 }
 .formdiv2 {
-
   position: relative;
   text-align: center;
   top: 50%;

@@ -3,37 +3,18 @@
     <h2>serch results for :</h2>
     <div class="grid">
       <div v-for="r in recipes" :key="r.id">
-        <RecipePreview :recipe="r" />
+        <personalRecipe :recipe="r" />
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import RecipePreview from "./RecipePreview";
+import personalRecipe from "./RecipePreview";
 export default {
   name: "GridSearchRecipe",
   components: {
-    RecipePreview
-  },
-  props: {
-    query: {
-      type: string,
-      requierd: true
-    },
-    amount: {
-      type: integer,
-      requierd: true
-    },
-    diet: {
-      type: string
-    },
-    cuisine: {
-      type: string
-    },
-    intolerance: {
-      type: string
-    }
+    personalRecipe
   },
   data() {
     return {
@@ -47,25 +28,16 @@ export default {
   methods: {
     async searchAndOreder() {
       try {
-        let search_params = {};
-        if (diet != null) {
-          search_params.diet = this.diet;
+        let endpoint = "";
+        endpoint = "https://recipestest1.herokuapp.com/user/getfamilyrecipes";
+        const response = await this.axios.get(endpoint, {
+          withCredentials: true
+        });
+        if (response.status == 204) {
+          this.haveFamRec = false;
         }
-        if (cuisine != null) {
-          search_params.cuisine = this.cuisine;
-        }
-        if (intolerance != null) {
-          search_params.intolerance = this.intolerance;
-        }
-
-        const res = await this.axios.get(
-          `https://recipestest1.herokuapp.com/recipes/search/query/${this.query}/amount/${this.amount}`,
-          { params: search_params }
-        );
-        let all = res.data;
-        console.log(all);
         this.recipes = [];
-        this.recipes.push(...all);
+        this.recipes.push(...response.data);
       } catch (err) {
         console.log(err.res);
         this.form.submitError = err.res.data.message;

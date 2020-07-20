@@ -103,6 +103,7 @@ export default {
         );
         this.recipe.favorite = true;
         this.recipe.watched = true;
+        this.$store.favorites.push(this.recipe);
       } else {
         this.$refs["my-modal"].show();
       }
