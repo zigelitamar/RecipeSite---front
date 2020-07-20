@@ -206,11 +206,11 @@ export default {
       password: {
         required,
         length: p => minLength(5)(p) && maxLength(10)(p),
+          withSpecial: function(value) {
+          return /[!@#$%^&*-+?]/.test(value);
+        },
         withNumber: function(value) {
           return /[0-9]/.test(value);
-        },
-        withSpecial: function(value) {
-          return /[#?!@$%^&*-]/.test(value);
         }
       },
       passwordconfirm: {
