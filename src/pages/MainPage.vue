@@ -1,12 +1,12 @@
 <template >
   <div class="containerimage">
-    <b-alert
+    <!-- <b-alert
       class="mx-auto w-25"
       v-if="!$root.store.username"
       variant="success"
       dismissible
       show
-    >Hello guest</b-alert>
+    >Hello guest</b-alert> -->
 
     <b-container>
       <b-row>

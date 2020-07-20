@@ -19,6 +19,11 @@
         </b-nav-item>
       </b-navbar-nav>
       <b-navbar-nav class="ml-auto">
+              <b-nav-item
+          size="sm"
+          class="mr-sm-2"
+          v-if="!($root.store.username)"
+        >hello guest</b-nav-item>
         <b-nav-item v-if="!$root.store.username" class="legislate" :to="{ name: 'register' }">
           <b-icon icon="pencil" rotate="270" />Register
         </b-nav-item>
@@ -30,6 +35,8 @@
           class="mr-sm-2"
           v-if="$root.store.username"
         >{{ $root.store.username }}:</b-nav-item>
+
+   
 
         <!-- Navbar dropdowns -->
 
